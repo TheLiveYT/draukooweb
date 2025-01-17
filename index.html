@@ -1,213 +1,196 @@
 <!DOCTYPE html>
-<html lang="cs">
-    <head>
-        <meta charSet="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="preload" href="cs.woff2" as="font" crossorigin="" type="font/woff2"/>
-        <link rel="preload" href="cs.woff2" as="font" crossorigin="" type="font/woff2"/>
-        <link rel="stylesheet" href="4eb2691c3596fc1b.css" />
-        <link rel="stylesheet" href="5391b0cd01625b90.css" />
-        <link rel="preload" as="script" fetchPriority="low" href="webpack-534594d51f4d1649.js"/>
-        <title>Draukoo.eu</title>
-        <meta name="description" content="Zahraj si realistický survival! Stačí se připojit &quot;mc.draukoo.eu&quot; a začít hrát!"/>
-        <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials"/>
-        <meta name="next-size-adjust"/>
-        <link rel="icon" href="fav.png" sizes="any"/>
-        <link rel="icon" href="fav.png" type="image/svg+xml"/>
-        <link rel="apple-touch-icon" href="fav.png"/>
-        <link rel="manifest" href="manifest.webmanifest"/>
-    </head>
-    <body class="__variable_f3a0e4 __variable_b1da2a">
-        <script type="f02b3759435a2ce56499d53d-text/javascript">
-            !function(){try{var d=document.documentElement,n='data-theme',s='setAttribute';var e=localStorage.getItem('theme');if('system'===e||(!e&&true)){var t='(prefers-color-scheme: dark)',m=window.matchMedia(t);if(m.media!==t||m.matches){d.style.colorScheme = 'dark';d[s](n,'dark')}else{d.style.colorScheme = 'light';d[s](n,'light')}}else if(e){d[s](n,e|| '')}if(e==='light'||e==='dark')d.style.colorScheme=e}catch(e){}}()
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draukoo.eu</title>
+    <link rel="icon" type="image/png" href="media/favicon.png">
+    <link rel="stylesheet" href="media/style.css">
+    <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <nav class="desktop_navbar">
+      <a href="#"><img class="desktop_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
+      <a href="https://github.com/ValMobile/RealisticSurvival/wiki/Getting-Started" class="desktop_navbar_link">Wiki</a>
+      <a href="#discord" class="desktop_navbar_link scroll">Komunita</a>
+      <a href="#about" class="desktop_navbar_link scroll">Kdo jsme</a>
+      <div class="desktop_navbar_link2_div">
+          <a href="#join" class="desktop_navbar_link2 scroll">Připoj se!</a>
+      </div>
+    </nav>
+    <div class="mobile_navbar">
+      <a href="#" class="mobile_navbar_logo_img_a"><img class="mobile_navbar_logo_img" src="media/logo_small.png" alt="logo"></a>
+      <div id="mobile_navbar_links">
+          <a class="mobile_navbar_link" onclick="mobile_navbar_link_hider()" href="https://github.com/ValMobile/RealisticSurvival/wiki/Getting-Started">Wiki</a>
+          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#discord">Komunita</a>
+          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#about">Kdo jsme</a>
+          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#join">Připoj se!</a>
+        </div>
+        <div class="icon" onclick="mobile_navbar_link_hider()">
+            <i class="fa fa-bars"></i>
+        </div>
+        <script>
+            function mobile_navbar_link_hider() {
+            var x = document.getElementById("mobile_navbar_links");
+            if (x.style.display === "flex") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "flex";
+            }
+            } 
         </script>
-        <div class="Toastify"></div>
-        <header class="fixed top-0 left-0 z-30 w-full py-6 bg-gradient-to-b from-neutral-950 transition-all">
-            <nav class="flex container items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <a class="w-40" href="/">
-                        <img alt="Draukoo.eu Logo" loading="lazy" width="320" height="300.16666666666667" decoding="async" data-nimg="1" style="color:transparent" srcSet="draukoo.png" src="draukoo.png"/>
-                    </a>
-                </div>
-                <ul class="lg:flex hidden items-center gap-4">
-                    <li>
-                        <a class="py-2 px-4 text-white flex items-center justify-center text-center hover:text-white/70 font-semibold rounded-2xl transition-colors duration-300 bg-white/20 hover:bg-white/30" href="/">Úvod</a>
-                    </li>
-                    <li>
-                        <a class="py-2 px-4 text-white flex items-center justify-center text-center hover:text-white/70 font-semibold rounded-2xl transition-colors duration-300 hover:bg-white/20" href="/nas-tym">Admin tým</a>
-                    </li>
-                    <li>
-                        <a class="py-2 px-4 text-white flex items-center justify-center text-center hover:text-white/70 font-semibold rounded-2xl transition-colors duration-300 hover:bg-white/20" href="/pravidla">Pravidla</a>
-                    </li>
-                    <li>
-                        <a class="py-2 px-4 text-white flex items-center justify-center text-center hover:text-white/70 font-semibold rounded-2xl transition-colors duration-300 hover:bg-white/20" href="/zakladni-informace">Kontakt</a>
-                    </li>
-                </ul>
-                <div class="hidden lg:flex items-center gap-4">
-                    <a class="cursor-pointer tracking-wider transition-colors duration-300 flex items-center justify-center text-white border-b-4 gap-2 font-semibold uppercase disabled:border-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed disabled:text-gray-800 disabled:hover:bg-gray-600 px-6 py-3 text-sm rounded-2xl bg-amber-500 border-amber-700 hover:bg-amber-600 active:bg-amber-700" target="_blank" rel="noreferrer" href="https://platby.hostify.cz/70836">
-                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="8" cy="21" r="1"></circle>
-                            <circle cx="19" cy="21" r="1"></circle>
-                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                        </svg>
-                        Obchod
-                    </a>
-                    <button class="text-white hover:text-white/70 font-semibold transition-colors duration-300 flex justify-center items-center h-10 w-10 rounded-2xl bg-white/20 hover:bg-white/50">
-                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                        </svg>
-                        <span class="sr-only"> </span>
-                    </button>
-                </div>
-                <div class="lg:hidden flex items-center gap-4">
-                    <button class="text-white hover:text-white/70 font-semibold transition-colors duration-300 flex justify-center items-center h-10 w-10 rounded-2xl bg-white/20 hover:bg-white/50">
-                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                        </svg>
-                        <span class="sr-only"> </span>
-                    </button>
-                    <button class="text-white hover:text-white/70 font-semibold transition-colors duration-300 flex justify-center items-center h-10 w-10 rounded-2xl bg-white/20 hover:bg-white/50">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="w-6 h-6" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="48" d="M88 152h336M88 256h336M88 360h336"></path>
-                        </svg>
-                        <span class="sr-only">Hlavní menu</span>
-                    </button>
-                </div>
-            </nav>
-        </header>
-        <div class="fixed top-0 right-0 flex-col flex z-40 h-full w-full bg-primary-500 translate-x-full overflow-y-auto overscroll-y-none transition duration-500">
-            <nav class="flex py-6 container items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <a class="w-40" href="/">
-                        <img alt="Draukoo.eu Logo" loading="lazy" width="320" height="96.16666666666667" decoding="async" data-nimg="1" style="color:transparent" srcSet="/_next/image?url=https%3A%2F%2Fcdn.rajce.pro%2Fassets%2Fbranding%2Flogo.png&amp;w=384&amp;q=75 1x, /_next/image?url=https%3A%2F%2Fcdn.rajce.pro%2Fassets%2Fbranding%2Flogo.png&amp;w=640&amp;q=75 2x" src="/_next/image?url=https%3A%2F%2Fcdn.rajce.pro%2Fassets%2Fbranding%2Flogo.png&amp;w=640&amp;q=75"/>
-                    </a>
-                </div>
-                <div class="flex items-center gap-4">
-                    <button class="text-white hover:text-white/70 font-semibold transition-colors duration-300 flex justify-center items-center h-10 w-10 rounded-2xl bg-white/20 hover:bg-white/50">
-                        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                        </svg>
-                        <span class="sr-only"> </span>
-                    </button>
-                    <button class="text-gray-700 hover:text-gray-400 font-semibold transition-colors duration-300 flex justify-center items-center h-10 w-10 rounded-full bg-white/20 hover:bg-white/50">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="w-6 h-6" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m289.94 256 95-95A24 24 0 0 0 351 127l-95 95-95-95a24 24 0 0 0-34 34l95 95-95 95a24 24 0 1 0 34 34l95-95 95 95a24 24 0 0 0 34-34z"></path>
-                        </svg>
-                        <span class="sr-only"> </span>
-                    </button>
-                </div>
-            </nav>
-            <div class="flex container flex-col gap-3">
-                <a class="block rounded-2xl text-center bg-primary-900 py-4 px-6 text-gray-700 font-semibold hover:bg-primary-600 transition-colors duration-300" href="/">Domů</a>
-                <a class="block rounded-2xl text-center bg-primary-900 py-4 px-6 text-gray-700 font-semibold hover:bg-primary-600 transition-colors duration-300" href="/nas-tym">Náš tým</a>
-                <a class="block rounded-2xl text-center bg-primary-900 py-4 px-6 text-gray-700 font-semibold hover:bg-primary-600 transition-colors duration-300" href="/pravidla">Pravidla</a>
-                <a class="block rounded-2xl text-center bg-primary-900 py-4 px-6 text-gray-700 font-semibold hover:bg-primary-600 transition-colors duration-300" href="/zakladni-informace">Základní informace</a>
-                <a class="cursor-pointer tracking-wider transition-colors duration-300 flex items-center justify-center text-white border-b-4 gap-2 font-semibold uppercase disabled:border-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed disabled:text-gray-800 disabled:hover:bg-gray-600 px-6 py-3 text-sm rounded-2xl bg-amber-500 border-amber-700 hover:bg-amber-600 active:bg-amber-700" target="_blank" rel="noreferrer" href="https://platby.hostify.cz/70836">
-                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="8" cy="21" r="1"></circle>
-                        <circle cx="19" cy="21" r="1"></circle>
-                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                    </svg>
-                    Store
-                </a>
-            </div>
+    </div>
+    <div class="mainflex">
+      <div class="main1">
+        <a class="main1_logo_a" href="#">
+          <img class="main1_logo" src="media/logo.png" alt="logo">
+        </a>
+        <div class="main1_description">
+          <a>Minecraft,<br>jako</a>
+          <a class="main1_actcent">nikdy nebyl</a><a>.</a>
         </div>
-        <section class="bg-no-repeat bg-cover" style="background-image:url(background.png)">
-            <div class="min-h-[60vh] flex flex-col justify-center items-center bg-gradient-to-t from-neutral-950 gap-8">
-                <h1 class="text-center uppercase text-3xl font-black text-white">Draukoo.eu</h1>
-            </div>
-        </section>
-        <div class="">
-            <section class="container flex flex-col gap-8 py-16" id="about_us">
-                <div class="flex flex-col gap-2 items-center justify-center">
-                    <h2 class="text-xl uppercase font-secondary text-gray-900 text-center font-bold">O nás</h2>
-                    <hr class="border-0 rounded w-12 border-b-[1px] border-t-2 border-t-accent-500 border-b-accent-700"/>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 place-items-center">
-                    <img alt="" loading="lazy" width="240" height="333" decoding="async" data-nimg="1" style="color:transparent" srcSet="character.png" src="character.png"/>
-                    <div>
-                        <h3 class="uppercase font-bold text-xl text-gray-900 tracking-wide text-center">
-                            O <span class="text-accent">Draukoo.eu</span>
-                        </h3>
-                        <p>Hledáš Minecraft server, kde se můžeš naplno ponořit do survivalu a zažít nezapomenutelné chvíle? Připoj se na mc.draukoo.eu! Nabízíme čistý a zábavný survival zážitek bez zbytečných komplikací, zaměřený na komunitu a kvalitní hraní. Ukaž své schopnosti, postav úžasné stavby a užij si Minecraft tak, jak ho máš rád. Těšíme se na tebe na mc.draukoo.eu!</p>
-                    </div>
-                </div>
-            </section>
+        <div class="main1_ipcopier_div">
+          <button class="main1_ipcopier" onclick="copyText()" type="button">
+            <span class="main1_ipcopier_text1">mc.draukoo.eu</span>
+            <br>
+            <span class="main1_ipcopier_text2">Klikni pro zkopírovaní</span>
+          </button>
+          <script>
+            function copyText() {
+                navigator.clipboard.writeText
+            ("play.example.com");
+                }
+            $(document).ready(function() {
+            $('.main1_ipcopier').click(function() {
+                var popup = $('<div>', { class: 'main1_popup' })
+                .append($('<h3 class="copy_confirm">').text('Copied IP to clipboard'))
+                $(this).after(popup);
+                setTimeout(function() {
+                popup.remove();
+                }, 1000);
+            });
+            });
+        </script>
         </div>
-        <div class="bg-primary-500">
-            <section class="container flex flex-col gap-8 py-16" id="discord">
-                <div class="flex flex-col gap-2 items-center justify-center">
-                    <h2 class="text-xl uppercase font-secondary text-gray-900 text-center font-bold">Připoj se na Discord server!</h2>
-                    <hr class="border-0 rounded w-12 border-b-[1px] border-t-2 border-t-accent-500 border-b-accent-700"/>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 place-items-center">
-                    <div class="flex flex-col gap-2 justify-self-center">
-                        <h2 class="font-bold">Máš zájem se připojit na náš discord server a získat spustu výhod??</h2>
-                        <ul class="list-disc list-inside flex flex-col">
-                            <li>Stačí kliknout na tlačítko!</li>
-                        </ul>
-                        <div class="flex">
-                            <a class="cursor-pointer tracking-wider transition-colors duration-300 flex items-center justify-center text-white border-b-4 gap-2 font-semibold uppercase disabled:border-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed disabled:text-gray-800 disabled:hover:bg-gray-600 px-6 py-3 text-sm rounded-2xl bg-discord-500 border-discord-700 hover:bg-discord-600 active:bg-discord-700" href="https://discord.gg/2m8DAJ3ZGW" target="_blank" rel="noreferrer">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" class="w-4 h-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path>
-                                </svg>
-                                Připojit se
-                            </a>
-                        </div>
-                    </div>
-                    <img alt="" loading="lazy" width="281.33" height="339.33" decoding="async" data-nimg="1" style="color:transparent" srcSet="image.webp" src="image.webp"/>
-                </div>
-            </section>
+        <a href="#more" class="scroll">
+          <img alt="downarrow" class="main1_downarrow" src="media/downarrow.png">
+        </a>
+        <script>
+          const scrollLinks = document.querySelectorAll('.scroll');
+          scrollLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+              event.preventDefault();
+              const target = document.querySelector(link.getAttribute('href'));
+              const offsetTop = target.offsetTop;
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+              });
+            });
+          });
+        </script>
+      </div>
+      <div id="more"></div>
+      <div class="main2">
+        <a class="headline">Co nabízíme</a>
+        <div class="main2_features_div">
+          <div class="main2_feature">
+            <a class="main2_feature_headline">Realistický survival</a>
+            <a class="main2_feature_text">Zahrajte si realistický survival s žízní, teplotou nebo simulací bolesti!</a>
+          </div>
+          <div class="main2_feature">
+            <a class="main2_feature_headline">Bedny</a>
+            <a class="main2_feature_text">Otevírej bedny a vyhrávej věci!</a>
+          </div>
+          <div class="main2_feature">
+            <a class="main2_feature_headline">Non-Vanilla věci</a>
+            <a class="main2_feature_text">Zazářej se speciálními věci!</a>
+          </div>
         </div>
- 
-        <footer class="flex flex-col gap-8">
-            <div class="bg-primary-500">
-                <div class="container flex flex-col gap-8 py-4 md:grid md:grid-cols-2 md:py-0">
-                    <div class="flex flex-col items-center gap-8 md:flex-row md:gap-12">
-                        <div class="flex flex-col">
-                            <div class="cursor-pointer text-center font-bold uppercase text-gray-700 md:text-left">
-                                <p>Draukoo.eu</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-center gap-4 md:justify-end">
-                        <a class="hover:text-accent font-bold text-gray-700" target="_blank" href="https://discord.gg/2m8DAJ3ZGW">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="h-6 w-6" aria-label="Odkaz na Draukoo.eu discord" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M464 66.52A50 50 0 0 0 414.12 17L97.64 16A49.65 49.65 0 0 0 48 65.52V392c0 27.3 22.28 48 49.64 48H368l-13-44 109 100zM324.65 329.81s-8.72-10.39-16-19.32C340.39 301.55 352.5 282 352.5 282a139 139 0 0 1-27.85 14.25 173.31 173.31 0 0 1-35.11 10.39 170.05 170.05 0 0 1-62.72-.24 184.45 184.45 0 0 1-35.59-10.4 141.46 141.46 0 0 1-17.68-8.21c-.73-.48-1.45-.72-2.18-1.21-.49-.24-.73-.48-1-.48-4.36-2.42-6.78-4.11-6.78-4.11s11.62 19.09 42.38 28.26c-7.27 9.18-16.23 19.81-16.23 19.81-53.51-1.69-73.85-36.47-73.85-36.47 0-77.06 34.87-139.62 34.87-139.62 34.87-25.85 67.8-25.12 67.8-25.12l2.42 2.9c-43.59 12.32-63.44 31.4-63.44 31.4s5.32-2.9 14.28-6.77c25.91-11.35 46.5-14.25 55-15.21a24 24 0 0 1 4.12-.49 205.62 205.62 0 0 1 48.91-.48 201.62 201.62 0 0 1 72.89 22.95s-19.13-18.15-60.3-30.45l3.39-3.86s33.17-.73 67.81 25.16c0 0 34.87 62.56 34.87 139.62 0-.28-20.35 34.5-73.86 36.19z"></path>
-                                <path d="M212.05 218c-13.8 0-24.7 11.84-24.7 26.57s11.14 26.57 24.7 26.57c13.8 0 24.7-11.83 24.7-26.57.25-14.76-10.9-26.57-24.7-26.57zm88.38 0c-13.8 0-24.7 11.84-24.7 26.57s11.14 26.57 24.7 26.57c13.81 0 24.7-11.83 24.7-26.57S314 218 300.43 218z"></path>
-                            </svg>
-                        </a>
-                        <a class="hover:text-accent font-bold uppercase text-gray-700" target="_blank" href="Zatím nemáme!">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="h-6 w-6" aria-label="Odkaz na Draukoo.eu instagram" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M349.33 69.33a93.62 93.62 0 0 1 93.34 93.34v186.66a93.62 93.62 0 0 1-93.34 93.34H162.67a93.62 93.62 0 0 1-93.34-93.34V162.67a93.62 93.62 0 0 1 93.34-93.34h186.66m0-37.33H162.67C90.8 32 32 90.8 32 162.67v186.66C32 421.2 90.8 480 162.67 480h186.66C421.2 480 480 421.2 480 349.33V162.67C480 90.8 421.2 32 349.33 32z"></path>
-                                <path d="M377.33 162.67a28 28 0 1 1 28-28 27.94 27.94 0 0 1-28 28zM256 181.33A74.67 74.67 0 1 1 181.33 256 74.75 74.75 0 0 1 256 181.33m0-37.33a112 112 0 1 0 112 112 112 112 0 0 0-112-112z"></path>
-                            </svg>
-                        </a>
-                        <a class="hover:text-accent font-bold uppercase text-gray-700" target="_blank" href="https://www.tiktok.com/@draukoo">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="h-6 w-6" aria-label="Odkaz na Draukoo.eu tiktok" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M412.19 118.66a109.27 109.27 0 0 1-9.45-5.5 132.87 132.87 0 0 1-24.27-20.62c-18.1-20.71-24.86-41.72-27.35-56.43h.1C349.14 23.9 350 16 350.13 16h-82.44v318.78c0 4.28 0 8.51-.18 12.69 0 .52-.05 1-.08 1.56 0 .23 0 .47-.05.71v.18a70 70 0 0 1-35.22 55.56 68.8 68.8 0 0 1-34.11 9c-38.41 0-69.54-31.32-69.54-70s31.13-70 69.54-70a68.9 68.9 0 0 1 21.41 3.39l.1-83.94a153.14 153.14 0 0 0-118 34.52 161.79 161.79 0 0 0-35.3 43.53c-3.48 6-16.61 30.11-18.2 69.24-1 22.21 5.67 45.22 8.85 54.73v.2c2 5.6 9.75 24.71 22.38 40.82A167.53 167.53 0 0 0 115 470.66v-.2l.2.2c39.91 27.12 84.16 25.34 84.16 25.34 7.66-.31 33.32 0 62.46-13.81 32.32-15.31 50.72-38.12 50.72-38.12a158.46 158.46 0 0 0 27.64-45.93c7.46-19.61 9.95-43.13 9.95-52.53V176.49c1 .6 14.32 9.41 14.32 9.41s19.19 12.3 49.13 20.31c21.48 5.7 50.42 6.9 50.42 6.9v-81.84c-10.14 1.1-30.73-2.1-51.81-12.61z"></path>
-                            </svg>
-                        </a>
-                        <a class="hover:text-accent font-bold uppercase text-gray-700" target="_blank" href="https://www.youtube.com/@DraukooYT">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="h-6 w-6" aria-label="Odkaz na Draukoo.eu youtube" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M508.64 148.79c0-45-33.1-81.2-74-81.2C379.24 65 322.74 64 265 64h-18c-57.6 0-114.2 1-169.6 3.6C36.6 67.6 3.5 104 3.5 149 1 184.59-.06 220.19 0 255.79q-.15 53.4 3.4 106.9c0 45 33.1 81.5 73.9 81.5 58.2 2.7 117.9 3.9 178.6 3.8q91.2.3 178.6-3.8c40.9 0 74-36.5 74-81.5 2.4-35.7 3.5-71.3 3.4-107q.34-53.4-3.26-106.9zM207 353.89v-196.5l145 98.2z"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div id="discord"></div>
+      <div class="main4">
+        <a class="headline">Připoj se na náš Discord server!</a>
+        <div class="main4_dc_div">
 
-            <div class="bg-primary-500">
-                <div class="container py-4">
-                    <p class="text-center text-sm">
-                        2025 Draukoo.eu © | Vytvořil
-                        <!-- -->
-                        <a class="cursor-pointer tracking-wider transition-colors duration-300 font-semibold text-accent-500 hover:text-accent-700" href="https://www.youtube.com/@DraukooYT">Draukoo</a>
-                    </p>
-                </div>
+          <div class="main4_dc_description_div">
+            <a class="main4_dc_description_title">Přijď si pokecat!</a>
+            <a class="main4_dc_description"> ・Najdi ostatní hráče <br> ・Vytvářej tickety <br> ・Dostávej oznámení <br> ・Dávej nápady  <br><br> a více! </a>
+            <a href="https://discord.gg/2m8DAJ3ZGW" class="main4_dc_button_a">
+              <div class="main4_dc_button">Připojit se!</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div id="about"></div>
+      <div class="main5">
+        <a class="headline">Kdo jsme</a>
+        <div class="main5_admin_div">
+          <div class="main5_admins_div main5_admins_dev_type2">
+            <img class="main5_admins_img" alt="admin member img" src="media/draukoo_a.png">
+            <div class="main5_admins_description_div">
+              <a class="main5_admins_description_rank main5_admins_description_rank_owner">Majitel</a>
+              <a class="main5_admins_description_title" href="https://www.youtube.com/@DraukooYT">Draukoo</a>
             </div>
-        </footer>
-
-        <script src="rocket-loader.min.js" data-cf-settings="f02b3759435a2ce56499d53d-|49" defer></script>
-    </body>
+          </div>
+          <div class="main5_admins_div main5_admins_dev_type1">
+            <img class="main5_admins_img" alt="admin member img" src="media/bob803_a.png">
+            <div class="main5_admins_description_div">
+              <a class="main5_admins_description_rank main5_admins_description_rank_admin">Admin</a>
+              <a class="main5_admins_description_title" href="">bob803</a>
+            </div>
+          </div>
+        </div>
+        <div class="main5_supporter_div">
+          <div class="main5_supporters_div">
+            <img class="main5_supporters_img" alt="supporters member img" src="media/adamcek16_a.png">
+            <div class="main5_supporters_description_div">
+              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">Hl. Helper</a>
+              <a class="main5_supporters_description_title">adamcek16</a>
+            </div>
+          </div>
+          <div class="main5_supporters_div">
+            <img class="main5_supporters_img" alt="supporters member img" src="media/snowv_a.png">
+            <div class="main5_supporters_description_div">
+              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">El. Helper</a>
+              <a class="main5_supporters_description_title">snowv</a>
+            </div>
+          </div>
+          <div class="main5_supporters_div">
+            <img class="main5_supporters_img" alt="supporters member img" src="media/tylertattoo_a.png">
+            <div class="main5_supporters_description_div">
+              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">Helper</a>
+              <a class="main5_supporters_description_title">TylerTattoo</a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div id="join"></div>
+      <div class="main3">
+        <a class="headline">Jak se připojit?</a>
+        <div class="main3_join_div_div">
+          <div class="main3_join_div">
+            <a class="main3_join_title">Java</a>
+            <div class="main3_join_content_div">
+              <div class="main3_join_categories">
+                <a>IP:</a>
+                <a>Verze:</a>
+              </div>
+              <div class="main3_join_values">
+                <a>mc.draukoo.eu</a>
+                <a>1.21.1</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="copyright_div">
+      <a href="https://www.youtube.com/@DraukooYT" class="copyright">Vytvořil Draukoo | 2025</a>
+    </footer>
+  </body>
 </html>
