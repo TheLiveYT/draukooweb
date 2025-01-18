@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const port = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
@@ -9,7 +10,14 @@ const io = new Server(server);
 let users = {};  // Uchovávání uživatelů
 
 app.use(express.static("public"));
+// Pokud nemáte další routy, můžete přidat základní routu
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/chat.html');  // Tento soubor bude zobrazen při návštěvě "/"
+});
 
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
 io.on("connection", (socket) => {
     console.log("Uživatel připojen:", socket.id);
 
