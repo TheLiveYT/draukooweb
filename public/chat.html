@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat s Draukoo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="login-container">
+        <h2>Registrovat / Přihlásit</h2>
+        <input type="text" id="username-input" placeholder="Jméno uživatele" />
+        <input type="password" id="register-password" placeholder="Heslo pro registraci" />
+        <button id="register-button">Registrovat</button>
+        
+        <input type="text" id="login-username" placeholder="Jméno uživatele pro přihlášení" />
+        <input type="password" id="password-input" placeholder="Heslo" />
+        <button id="login-button">Přihlásit</button>
+    </div>
+    <div id="chat-container" style="display: none;">
+        <div id="chat-messages"></div>
+        <input type="text" id="message-input" placeholder="Napište zprávu" disabled />
+        <button id="send-message-button" disabled>Odeslat</button>
+        <input type="text" id="target-username" placeholder="Jméno uživatele pro odpověď" style="display: none;" />
+        <button id="send-to-user-button" style="display: none;">Odeslat zprávu</button>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
