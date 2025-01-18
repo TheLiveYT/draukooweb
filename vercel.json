@@ -12,6 +12,10 @@
   ],
   "routes": [
     {
+      "src": "/",
+      "dest": "/public/chat.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "server.js"
     }
