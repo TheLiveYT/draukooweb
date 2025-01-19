@@ -7,7 +7,12 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 let users = {};  // Uchovávání uživatelů
-
+app.use((req, res, next) => {
+  if (req.headers["x-forwarded-proto"] !== "https") {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
 app.use(express.static("public"));
 // Pokud nemáte další routy, můžete přidat základní routu
 app.get('/', (req, res) => {
@@ -17,6 +22,7 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
 io.on("connection", (socket) => {
     console.log("Uživatel připojen:", socket.id);
 
