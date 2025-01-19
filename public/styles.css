@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url("public/dveredonebe.png");
-    /*background-color: #f4f4f4;*/
+    /*background-image: url("public/dveredonebe.png");*/
+    background-color: #ff0000;
     margin: 0;
     padding: 0;
     display: flex;
