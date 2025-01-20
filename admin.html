@@ -90,7 +90,7 @@
             display: none;
         }
         .ban-table p {
-            white-space: nowrap;
+            white-space: nowrap; /* Zabrání textu rozdělit se do nových řádků */
             overflow: visible;
             text-overflow: ellipsis;
         }
@@ -100,7 +100,7 @@
     </style>
 </head>
 <body>
-    <div class="navbar hidden">
+    <div class="navbar hidden" id="navbar">
         <a href="#" onclick="showSection('absence')">Omluvenky</a>
         <a href="#" onclick="showSection('ban-table')">Banovací tabulka</a>
         <a href="#" onclick="showSection('banlist')">Banovací list</a>
@@ -113,6 +113,10 @@
             <select id="username">
                 <option value="Draukoo">Draukoo</option>
                 <option value="bob803">bob803</option>
+                <option value="TylerTattoo">TylerTattoo</option>
+                <option value="snowv">snowv</option>
+                <option value="adamcek16">adamcek16</option>
+                <option value="resii">resii</option>
             </select>
             <input type="password" id="password" placeholder="Heslo" onkeypress="checkEnter(event)">
             <button onclick="login()">Přihlásit se</button>
@@ -128,7 +132,9 @@
                 <label for="to-date">Do</label>
                 <input type="date" id="to-date" onkeypress="checkEnter(event)">
                 <button onclick="addAbsence()">Přidat omluvenku</button>
-                <div class="absence-list" id="absence-list"></div>
+                <div class="absence-list" id="absence-list">
+                    <!-- Omluvenky budou zobrazeny zde -->
+                </div>
             </div>
 
             <div id="ban-table" class="section">
@@ -157,7 +163,9 @@
                 <label for="ban-reason">Důvod</label>
                 <textarea id="ban-reason" placeholder="Důvod banu" onkeypress="checkEnter(event)"></textarea>
                 <button onclick="addBan()">Přidat ban</button>
-                <div class="ban-list" id="ban-list"></div>
+                <div class="ban-list" id="ban-list">
+                    <!-- Zde se budou zobrazovat bannutí uživatelé -->
+                </div>
             </div>
 
             <div id="tickets" class="section">
@@ -168,6 +176,7 @@
     </div>
 
     <script>
+        // Firebase konfigurace
         const firebaseConfig = {
             apiKey: "AIzaSyCA-QJZtC1mLllXBIqZ73frYKzGYMH2uB0",
             authDomain: "draukooadmin.firebaseapp.com",
@@ -184,7 +193,11 @@
 
         const hardcodedPassword = {
             Draukoo: "heslo123",
-            bob803: "tajneheslo"
+            bob803: "tajneheslo",
+            TylerTattoo: "hesloTyler",
+            snowv: "hesloSnowv",
+            adamcek16: "hesloAdamcek",
+            resii: "hesloResii"
         };
 
         let isLoggedIn = false;
@@ -196,9 +209,9 @@
             if (hardcodedPassword[username] === password) {
                 isLoggedIn = true;
                 document.getElementById("login-form").classList.add("hidden");
+                document.getElementById("navbar").classList.remove("hidden");
                 document.getElementById("admin-panel").classList.remove("hidden");
-                document.querySelector(".navbar").classList.remove("hidden");
-                showSection('absence');
+                showSection('absence');  // Zobrazí omluvenky po přihlášení
                 loadAbsences();
                 loadBanList();
             } else {
@@ -223,46 +236,57 @@
             const day = date.getDate().toString().padStart(2, '0');
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
             const year = date.getFullYear();
-            return `${day}.${month}.${year}`;
+            return `${day}. ${month}. ${year}`;
         }
 
         function addAbsence() {
-            const username = document.getElementById("username").value;
             const reason = document.getElementById("reason").value;
             const fromDate = document.getElementById("from-date").value;
             const toDate = document.getElementById("to-date").value;
+            const username = document.getElementById("username").value;
 
             if (reason && fromDate && toDate) {
                 const newAbsence = {
-                    reason,
-                    fromDate,
-                    toDate,
-                    username,
+                    username: username,
+                    reason: reason,
+                    fromDate: fromDate,
+                    toDate: toDate
                 };
 
-                database.ref("absences").push(newAbsence);
-                alert("Omluvenka přidána.");
+                // Přidání omluvenky do Firebase
+                const absencesRef = database.ref('absences');
+                absencesRef.push(newAbsence);
+
+                // Aktualizace zobrazení omluvenek
+                loadAbsences();
+
+                // Vyčištění formuláře
+                document.getElementById("reason").value = "";
+                document.getElementById("from-date").value = "";
+                document.getElementById("to-date").value = "";
             } else {
-                alert("Vyplňte všechny informace!");
+                alert("Vyplňte všechna pole!");
             }
         }
 
         function loadAbsences() {
-            const absenceList = document.getElementById("absence-list");
-            absenceList.innerHTML = '';
+            const absencesRef = database.ref('absences');
+            absencesRef.once('value', snapshot => {
+                const absenceList = snapshot.val();
+                const absenceListDiv = document.getElementById("absence-list");
+                absenceListDiv.innerHTML = '';
 
-            database.ref("absences").once("value", (snapshot) => {
-                const absences = snapshot.val();
-                for (let id in absences) {
-                    const absence = absences[id];
-                    const absenceDiv = document.createElement("div");
-                    absenceDiv.classList.add("absence-item");
-                    absenceDiv.innerHTML = `
-                        <p><strong>Uživatel:</strong> ${absence.username}</p>
-                        <p><strong>Důvod:</strong> ${absence.reason}</p>
-                        <p><strong>Od:</strong> ${formatDate(absence.fromDate)} <strong>Do:</strong> ${formatDate(absence.toDate)}</p>
+                for (let id in absenceList) {
+                    const absence = absenceList[id];
+                    const absenceElement = document.createElement('div');
+                    absenceElement.classList.add('absence-item');
+                    absenceElement.innerHTML = `
+                        <strong>${absence.username}</strong><br>
+                        Důvod: ${absence.reason}<br>
+                        Od: ${formatDate(absence.fromDate)}<br>
+                        Do: ${formatDate(absence.toDate)}
                     `;
-                    absenceList.appendChild(absenceDiv);
+                    absenceListDiv.appendChild(absenceElement);
                 }
             });
         }
@@ -275,35 +299,47 @@
 
             if (username && fromDate && toDate && reason) {
                 const newBan = {
-                    username,
-                    fromDate,
-                    toDate,
-                    reason,
+                    username: username,
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    reason: reason
                 };
 
-                database.ref("bans").push(newBan);
-                alert("Ban přidán.");
+                // Přidání banu do Firebase
+                const bansRef = database.ref('bans');
+                bansRef.push(newBan);
+
+                // Aktualizace zobrazení ban listu
+                loadBanList();
+
+                // Vyčištění formuláře
+                document.getElementById("ban-username").value = "";
+                document.getElementById("ban-from-date").value = "";
+                document.getElementById("ban-to-date").value = "";
+                document.getElementById("ban-reason").value = "";
             } else {
-                alert("Vyplňte všechny informace!");
+                alert("Vyplňte všechna pole!");
             }
         }
 
         function loadBanList() {
-            const banList = document.getElementById("ban-list");
-            banList.innerHTML = '';
+            const bansRef = database.ref('bans');
+            bansRef.once('value', snapshot => {
+                const banList = snapshot.val();
+                const banListDiv = document.getElementById("ban-list");
+                banListDiv.innerHTML = '';
 
-            database.ref("bans").once("value", (snapshot) => {
-                const bans = snapshot.val();
-                for (let id in bans) {
-                    const ban = bans[id];
-                    const banDiv = document.createElement("div");
-                    banDiv.classList.add("ban-item");
-                    banDiv.innerHTML = `
-                        <p><strong>Uživatel:</strong> ${ban.username}</p>
-                        <p><strong>Od:</strong> ${formatDate(ban.fromDate)} <strong>Do:</strong> ${formatDate(ban.toDate)}</p>
-                        <p><strong>Důvod:</strong> ${ban.reason}</p>
+                for (let id in banList) {
+                    const ban = banList[id];
+                    const banElement = document.createElement('div');
+                    banElement.classList.add('ban-item');
+                    banElement.innerHTML = `
+                        <strong>${ban.username}</strong><br>
+                        Důvod: ${ban.reason}<br>
+                        Od: ${formatDate(ban.fromDate)}<br>
+                        Do: ${formatDate(ban.toDate)}
                     `;
-                    banList.appendChild(banDiv);
+                    banListDiv.appendChild(banElement);
                 }
             });
         }
@@ -311,18 +347,15 @@
         function checkEnter(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
-                if (event.target.id === "password") {
+                if (event.target.id === "username" || event.target.id === "password") {
                     login();
-                } else if (event.target.id === "reason" || event.target.id === "ban-reason") {
+                } else if (event.target.id === "reason" || event.target.id === "from-date" || event.target.id === "to-date") {
                     addAbsence();
+                } else if (event.target.id === "ban-username" || event.target.id === "ban-from-date" || event.target.id === "ban-to-date" || event.target.id === "ban-reason") {
+                    addBan();
                 }
             }
         }
-
-        // Zakázání pravého kliknutí
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
     </script>
 </body>
 </html>
