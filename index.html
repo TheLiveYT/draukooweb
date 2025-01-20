@@ -1,328 +1,198 @@
 <!DOCTYPE html>
-<html lang="cs">
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #f4f4f9;
-        }
-        .navbar {
-            width: 100%;
-            background: #007bff;
-            color: white;
-            padding: 10px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            z-index: 100;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            font-size: 18px;
-        }
-        .navbar a:hover {
-            background-color: #0056b3;
-            border-radius: 5px;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-top: 50px;
-            padding: 20px;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-        .section {
-            display: none;
-            width: 50%;
-            margin: 0 auto;
-        }
-        .section.active {
-            display: block;
-        }
-        input, select, button, textarea {
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .absence-list, .ban-list {
-            margin-top: 20px;
-        }
-        .absence-item, .ban-item {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            background: #f9f9f9;
-        }
-        h2 {
-            margin-bottom: 10px;
-        }
-        .hidden {
-            display: none;
-        }
-        .ban-table p {
-            white-space: nowrap;
-            overflow: visible;
-            text-overflow: ellipsis;
-        }
-        label {
-            font-size: 14px;
-        }
-    </style>
+    <title>Draukoo.eu</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="navbar hidden">
-        <a href="#" onclick="showSection('absence')">Omluvenky</a>
-        <a href="#" onclick="showSection('ban-table')">Banovací tabulka</a>
-        <a href="#" onclick="showSection('banlist')">Banovací list</a>
-        <a href="#" onclick="showSection('tickets')">Tickety</a>
-    </div>
-
-    <div class="container">
-        <div id="login-form">
-            <h2>Přihlášení</h2>
-            <select id="username">
-                <option value="Draukoo">Draukoo</option>
-                <option value="bob803">bob803</option>
-            </select>
-            <input type="password" id="password" placeholder="Heslo" onkeypress="checkEnter(event)">
-            <button onclick="login()">Přihlásit se</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <nav class="desktop_navbar">
+      <a href="#"><img class="desktop_navbar_logo_img" src="logo_small.png" alt="logo"></a>
+      <a href="https://github.com/ValMobile/RealisticSurvival/wiki/Getting-Started" class="desktop_navbar_link">Wiki</a>
+      <a href="#discord" class="desktop_navbar_link scroll">Komunita</a>
+      <a href="#about" class="desktop_navbar_link scroll">Kdo jsme</a>
+      <a href="ticket.html" class="desktop_navbar_link">Tickety</a>
+      <div class="desktop_navbar_link2_div">
+          <a href="#join" class="desktop_navbar_link2 scroll">Připoj se!</a>
+      </div>
+    </nav>
+    <div class="mobile_navbar">
+      <a href="#" class="mobile_navbar_logo_img_a"><img class="mobile_navbar_logo_img" src="logo_small.png" alt="logo"></a>
+      <div id="mobile_navbar_links">
+          <a class="mobile_navbar_link" onclick="mobile_navbar_link_hider()" href="https://github.com/ValMobile/RealisticSurvival/wiki/Getting-Started">Wiki</a>
+          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#discord">Komunita</a>
+          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#about">Kdo jsme</a>
+          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#join">Připoj se!</a>
+          <a class="mobile_navbar_link" onclick="mobile_navbar_link_hider()" href="ticket.html">Tickety</a>
         </div>
-
-        <div id="admin-panel" class="hidden">
-            <div id="absence" class="section">
-                <h2>Omluvenky</h2>
-                <label for="reason">Důvod</label>
-                <textarea id="reason" placeholder="Důvod" onkeypress="checkEnter(event)"></textarea>
-                <label for="from-date">Od</label>
-                <input type="date" id="from-date" onkeypress="checkEnter(event)">
-                <label for="to-date">Do</label>
-                <input type="date" id="to-date" onkeypress="checkEnter(event)">
-                <button onclick="addAbsence()">Přidat omluvenku</button>
-                <div class="absence-list" id="absence-list"></div>
-            </div>
-
-            <div id="ban-table" class="section">
-                <h2>Banovací tabulka</h2>
-                <div class="ban-table">
-                    <p>Cheaty - ban na 30 minut až 30 dní</p>
-                    <p>Uražení AT - mute na 2 až 6 hodin</p>
-                    <p>Spamování - mute na 2 až 6 hodin</p>
-                    <p>Opakované nadávání - ban na 7 dní</p>
-                    <p>Obcházení trestu - ban na 7 až 14 dní</p>
-                    <p>Reklama na jiný server - mute na 2 dny</p>
-                    <p>Obchodování mimo server - perma ban</p>
-                    <p>Obcházení perma banu - IP ban</p>
-                    <p>Prosíme, aby se všichni helpeři touto tabulkou řídili.</p>
-                </div>
-            </div>
-
-            <div id="banlist" class="section">
-                <h2>Banovací list</h2>
-                <label for="ban-username">Jméno uživatele</label>
-                <input type="text" id="ban-username" placeholder="Jméno uživatele" onkeypress="checkEnter(event)">
-                <label for="ban-from-date">Od</label>
-                <input type="date" id="ban-from-date" onkeypress="checkEnter(event)">
-                <label for="ban-to-date">Do</label>
-                <input type="date" id="ban-to-date" onkeypress="checkEnter(event)">
-                <label for="ban-reason">Důvod</label>
-                <textarea id="ban-reason" placeholder="Důvod banu" onkeypress="checkEnter(event)"></textarea>
-                <button onclick="addBan()">Přidat ban</button>
-                <div class="ban-list" id="ban-list"></div>
-            </div>
-
-            <div id="tickets" class="section">
-                <h2>Tickety</h2>
-                <p>Zatím nefunkční!</p>
-            </div>
+        <div class="icon" onclick="mobile_navbar_link_hider()">
+            <i class="fa fa-bars"></i>
         </div>
+        <script>
+            function mobile_navbar_link_hider() {
+            var x = document.getElementById("mobile_navbar_links");
+            if (x.style.display === "flex") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "flex";
+            }
+            } 
+        </script>
     </div>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCA-QJZtC1mLllXBIqZ73frYKzGYMH2uB0",
-            authDomain: "draukooadmin.firebaseapp.com",
-            databaseURL: "https://draukooadmin-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "draukooadmin",
-            storageBucket: "draukooadmin.firebasestorage.app",
-            messagingSenderId: "358092929701",
-            appId: "1:358092929701:web:b4708c744cad54b7fdeb4c",
-            measurementId: "G-B2WXN8N9FS"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        const hardcodedPassword = {
-            Draukoo: "heslo123",
-            bob803: "tajneheslo"
-        };
-
-        let isLoggedIn = false;
-
-        function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            if (hardcodedPassword[username] === password) {
-                isLoggedIn = true;
-                document.getElementById("login-form").classList.add("hidden");
-                document.getElementById("admin-panel").classList.remove("hidden");
-                document.querySelector(".navbar").classList.remove("hidden");
-                showSection('absence');
-                loadAbsences();
-                loadBanList();
-            } else {
-                alert("Špatné heslo!");
-            }
-        }
-
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-
-            const activeSection = document.getElementById(sectionId);
-            if (activeSection) {
-                activeSection.classList.add('active');
-            }
-        }
-
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            const day = date.getDate().toString().padStart(2, '0');
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}.${month}.${year}`;
-        }
-
-        function addAbsence() {
-            const username = document.getElementById("username").value;
-            const reason = document.getElementById("reason").value;
-            const fromDate = document.getElementById("from-date").value;
-            const toDate = document.getElementById("to-date").value;
-
-            if (reason && fromDate && toDate) {
-                const newAbsence = {
-                    reason,
-                    fromDate,
-                    toDate,
-                    username,
-                };
-
-                database.ref("absences").push(newAbsence);
-                alert("Omluvenka přidána.");
-            } else {
-                alert("Vyplňte všechny informace!");
-            }
-        }
-
-        function loadAbsences() {
-            const absenceList = document.getElementById("absence-list");
-            absenceList.innerHTML = '';
-
-            database.ref("absences").once("value", (snapshot) => {
-                const absences = snapshot.val();
-                for (let id in absences) {
-                    const absence = absences[id];
-                    const absenceDiv = document.createElement("div");
-                    absenceDiv.classList.add("absence-item");
-                    absenceDiv.innerHTML = `
-                        <p><strong>Uživatel:</strong> ${absence.username}</p>
-                        <p><strong>Důvod:</strong> ${absence.reason}</p>
-                        <p><strong>Od:</strong> ${formatDate(absence.fromDate)} <strong>Do:</strong> ${formatDate(absence.toDate)}</p>
-                    `;
-                    absenceList.appendChild(absenceDiv);
+    <div class="mainflex">
+      <div class="main1">
+        <a class="main1_logo_a" href="#">
+          <img class="main1_logo" src="logo.png" alt="logo">
+        </a>
+        <div class="main1_description">
+          <a>Minecraft,<br>jako</a>
+          <a class="main1_actcent">nikdy nebyl</a><a>.</a>
+        </div>
+        <div class="main1_ipcopier_div">
+          <button class="main1_ipcopier" onclick="copyText()" type="button">
+            <span class="main1_ipcopier_text1">mc.draukoo.eu</span>
+            <br>
+            <span class="main1_ipcopier_text2">Klikni pro zkopírovaní</span>
+          </button>
+          <script>
+            function copyText() {
+                navigator.clipboard.writeText
+            ("play.example.com");
                 }
+            $(document).ready(function() {
+            $('.main1_ipcopier').click(function() {
+                var popup = $('<div>', { class: 'main1_popup' })
+                .append($('<h3 class="copy_confirm">').text('Copied IP to clipboard'))
+                $(this).after(popup);
+                setTimeout(function() {
+                popup.remove();
+                }, 1000);
             });
-        }
-
-        function addBan() {
-            const username = document.getElementById("ban-username").value;
-            const fromDate = document.getElementById("ban-from-date").value;
-            const toDate = document.getElementById("ban-to-date").value;
-            const reason = document.getElementById("ban-reason").value;
-
-            if (username && fromDate && toDate && reason) {
-                const newBan = {
-                    username,
-                    fromDate,
-                    toDate,
-                    reason,
-                };
-
-                database.ref("bans").push(newBan);
-                alert("Ban přidán.");
-            } else {
-                alert("Vyplňte všechny informace!");
-            }
-        }
-
-        function loadBanList() {
-            const banList = document.getElementById("ban-list");
-            banList.innerHTML = '';
-
-            database.ref("bans").once("value", (snapshot) => {
-                const bans = snapshot.val();
-                for (let id in bans) {
-                    const ban = bans[id];
-                    const banDiv = document.createElement("div");
-                    banDiv.classList.add("ban-item");
-                    banDiv.innerHTML = `
-                        <p><strong>Uživatel:</strong> ${ban.username}</p>
-                        <p><strong>Od:</strong> ${formatDate(ban.fromDate)} <strong>Do:</strong> ${formatDate(ban.toDate)}</p>
-                        <p><strong>Důvod:</strong> ${ban.reason}</p>
-                    `;
-                    banList.appendChild(banDiv);
-                }
             });
-        }
+        </script>
+        </div>
+        <a href="#more" class="scroll">
+          <img alt="downarrow" class="main1_downarrow" src="downarrow.png">
+        </a>
+        <script>
+          const scrollLinks = document.querySelectorAll('.scroll');
+          scrollLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+              event.preventDefault();
+              const target = document.querySelector(link.getAttribute('href'));
+              const offsetTop = target.offsetTop;
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+              });
+            });
+          });
+        </script>
+      </div>
+      <div id="more"></div>
+      <div class="main2">
+        <a class="headline">Co nabízíme</a>
+        <div class="main2_features_div">
+          <div class="main2_feature">
+            <a class="main2_feature_headline">Realistický survival</a>
+            <a class="main2_feature_text">Zahrajte si realistický survival s žízní, teplotou nebo simulací bolesti!</a>
+          </div>
+          <div class="main2_feature">
+            <a class="main2_feature_headline">Bedny</a>
+            <a class="main2_feature_text">Otevírej bedny a vyhrávej věci!</a>
+          </div>
+          <div class="main2_feature">
+            <a class="main2_feature_headline">Non-Vanilla věci</a>
+            <a class="main2_feature_text">Zazářej se speciálními věci!</a>
+          </div>
+        </div>
+      </div>
+      <div id="discord"></div>
+      <div class="main4">
+        <a class="headline">Připoj se na náš Discord server!</a>
+        <div class="main4_dc_div">
 
-        function checkEnter(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                if (event.target.id === "password") {
-                    login();
-                } else if (event.target.id === "reason" || event.target.id === "ban-reason") {
-                    addAbsence();
-                }
-            }
-        }
-
-        // Zakázání pravého kliknutí
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-    </script>
-</body>
+          <div class="main4_dc_description_div">
+            <a class="main4_dc_description_title">Přijď si pokecat!</a>
+            <a class="main4_dc_description"> ・Najdi ostatní hráče <br> ・Vytvářej tickety <br> ・Dostávej oznámení <br> ・Dávej nápady  <br><br> a více! </a>
+            <a href="https://discord.gg/2m8DAJ3ZGW" class="main4_dc_button_a">
+              <div class="main4_dc_button">Připojit se!</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div id="about"></div>
+      <div class="main5">
+        <a class="headline">Kdo jsme</a>
+        <div class="main5_admin_div">
+          <div class="main5_admins_div main5_admins_dev_type2">
+            <img class="main5_admins_img" alt="admin member img" src="draukoo_a.png">
+            <div class="main5_admins_description_div">
+              <a class="main5_admins_description_rank main5_admins_description_rank_owner">Majitel</a>
+              <a class="main5_admins_description_title" href="https://www.youtube.com/@DraukooYT">Draukoo</a>
+            </div>
+          </div>
+          <div class="main5_admins_div main5_admins_dev_type1">
+            <img class="main5_admins_img" alt="admin member img" src="bob803_a.png">
+            <div class="main5_admins_description_div">
+              <a class="main5_admins_description_rank main5_admins_description_rank_admin">Admin</a>
+              <a class="main5_admins_description_title" href="">bob803</a>
+            </div>
+          </div>
+        </div>
+        <div class="main5_supporter_div">
+          <div class="main5_supporters_div">
+            <img class="main5_supporters_img" alt="supporters member img" src="adamcek16_a.png">
+            <div class="main5_supporters_description_div">
+              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">Hl. Helper</a>
+              <a class="main5_supporters_description_title">adamcek16</a>
+            </div>
+          </div>
+          <div class="main5_supporters_div">
+            <img class="main5_supporters_img" alt="supporters member img" src="snowv_a.png">
+            <div class="main5_supporters_description_div">
+              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">El. Helper</a>
+              <a class="main5_supporters_description_title">snowv</a>
+            </div>
+          </div>
+          <div class="main5_supporters_div">
+            <img class="main5_supporters_img" alt="supporters member img" src="tylertattoo_a.png">
+            <div class="main5_supporters_description_div">
+              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">Helper</a>
+              <a class="main5_supporters_description_title">TylerTattoo</a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div id="join"></div>
+      <div class="main3">
+        <a class="headline">Jak se připojit?</a>
+        <div class="main3_join_div_div">
+          <div class="main3_join_div">
+            <a class="main3_join_title">Java</a>
+            <div class="main3_join_content_div">
+              <div class="main3_join_categories">
+                <a>IP:</a>
+                <a>Verze:</a>
+              </div>
+              <div class="main3_join_values">
+                <a>mc.draukoo.eu</a>
+                <a>1.21.1</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="copyright_div">
+      <a href="https://www.youtube.com/@DraukooYT" class="copyright">Vytvořil Draukoo | 2025</a>
+    </footer>
+  </body>
 </html>
