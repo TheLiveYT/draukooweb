@@ -101,6 +101,7 @@
 </head>
 <body>
     <div class="navbar hidden" id="navbar">
+        <a href="index.html" onclick="showSection('tickets')">Draukoo.eu</a>
         <a href="#" onclick="showSection('absence')">Omluvenky</a>
         <a href="#" onclick="showSection('ban-table')">Banovací tabulka</a>
         <a href="#" onclick="showSection('banlist')">Banovací list</a>
@@ -192,12 +193,12 @@
         const database = firebase.database();
 
         const hardcodedPassword = {
-            Draukoo: "kkt123",
+            Draukoo: "heslo123",
             bob803: "tajneheslo",
             TylerTattoo: "hesloTyler",
             snowv: "hesloSnowv",
             adamcek16: "hesloAdamcek",
-            resii: "theresinka"
+            resii: "hesloResii"
         };
 
         let isLoggedIn = false;
