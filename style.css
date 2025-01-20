@@ -830,22 +830,22 @@ ul{
     color:#f2b035
 }
 
-a:link {
+.admin:link {
     text-decoration: none;
     color:#5e1d0c
 
 }
 
-a:visited {
+.admin:visited {
     text-decoration: none;
     color:#5e1d0c
 }
 
-a:hover {
+.admin:hover {
     text-decoration: none;
 }
 
-a:active {
+.admin:active {
     text-decoration: none;
     color:#5e1d0c
 }
