@@ -10,18 +10,35 @@
     <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <nav class="desktop_navbar">
-      <a href="#"><img class="desktop_navbar_logo_img" src="logo_small.png" alt="logo"></a>
-      <a href="https://github.com/ValMobile/RealisticSurvival/wiki/Getting-Started" class="desktop_navbar_link">Wiki</a>
-      <a href="#discord" class="desktop_navbar_link scroll">Komunita</a>
-      <a href="#about" class="desktop_navbar_link scroll">Kdo jsme</a>
-      <a href="ticket.html" class="desktop_navbar_link">Tickety</a>
+        <a href="#"><img class="desktop_navbar_logo_img" src="logo_small.png" alt="logo"></a>
+        <a class="desktop_navbar_link" href="#">O nas</a>
+        <a href="nastym.html" class="desktop_navbar_link ">Komunita</a>
+        <a href="https://chat.draukoo.eu" class="desktop_navbar_link">Chat</a>
+        <a href="https://github.com/ValMobile/RealisticSurvival/wiki/Getting-Started" class="desktop_navbar_link">Github</a>
       <div class="desktop_navbar_link2_div">
           <a href="#join" class="desktop_navbar_link2 scroll">Připoj se!</a>
       </div>
     </nav>
+    <script>
+      const navbar = document.querySelector('.desktop_navbar');
+  
+      window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+              // Při scrollování přidáme třídu pro černé pozadí a odstraníme gradient
+              navbar.classList.add('scrolled');
+              navbar.classList.remove('transparent');
+          } else {
+              // Když je stránka nahoře, přidáme gradient a odstraníme černé pozadí
+              navbar.classList.add('transparent');
+              navbar.classList.remove('scrolled');
+          }
+      });
+  </script>
+
     <div class="mobile_navbar">
       <a href="#" class="mobile_navbar_logo_img_a"><img class="mobile_navbar_logo_img" src="logo_small.png" alt="logo"></a>
       <div id="mobile_navbar_links">
@@ -29,8 +46,8 @@
           <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#discord">Komunita</a>
           <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#about">Kdo jsme</a>
           <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#join">Připoj se!</a>
-          <a class="mobile_navbar_link" onclick="mobile_navbar_link_hider()" href="ticket.html">Tickety</a>
         </div>
+
         <div class="icon" onclick="mobile_navbar_link_hider()">
             <i class="fa fa-bars"></i>
         </div>
@@ -45,13 +62,15 @@
             } 
         </script>
     </div>
+
+
     <div class="mainflex">
       <div class="main1">
         <a class="main1_logo_a" href="#">
           <img class="main1_logo" src="logo.png" alt="logo">
         </a>
         <div class="main1_description">
-          <a>Minecraft,<br>jako</a>
+          <a class="minecraft">MINECRAFT, jako</a><br>
           <a class="main1_actcent">nikdy nebyl</a><a>.</a>
         </div>
         <div class="main1_ipcopier_div">
@@ -60,6 +79,7 @@
             <br>
             <span class="main1_ipcopier_text2">Klikni pro zkopírovaní</span>
           </button>
+
           <script>
             function copyText() {
                 navigator.clipboard.writeText
@@ -76,10 +96,8 @@
             });
             });
         </script>
+
         </div>
-        <a href="#more" class="scroll">
-          <img alt="downarrow" class="main1_downarrow" src="downarrow.png">
-        </a>
         <script>
           const scrollLinks = document.querySelectorAll('.scroll');
           scrollLinks.forEach(function(link) {
@@ -95,39 +113,51 @@
           });
         </script>
       </div>
+
       <div id="more"></div>
       <div class="main2">
-        <a class="headline">Co nabízíme</a>
+        <a href="#more" class="scroll">
+          <img alt="downarrow" class="main1_downarrow" src="downarrow.png"> <!---->
+        </a>
+        <a class="headline">Co nabízíme?</a>
         <div class="main2_features_div">
           <div class="main2_feature">
-            <a class="main2_feature_headline">Realistický survival</a>
-            <a class="main2_feature_text">Zahrajte si realistický survival s žízní, teplotou nebo simulací bolesti!</a>
+            <a class="main2_feature_headline"id="rs">Realistický survival</a>
+            <img class="bonfire"src="bonfire_1293200.png"/>
+            <a class="main2_feature_text"><span class="zahraj">Zahrajte si realistický survival!</span>
+            </a>
           </div>
           <div class="main2_feature">
             <a class="main2_feature_headline">Bedny</a>
-            <a class="main2_feature_text">Otevírej bedny a vyhrávej věci!</a>
+            <img class="bonfire"src="chest_1587732.png"/>
+            <a class="main2_feature_text"><span class="bedny">Otevírej bedny a vyhrávej věci!</span></a>
           </div>
           <div class="main2_feature">
             <a class="main2_feature_headline">Non-Vanilla věci</a>
-            <a class="main2_feature_text">Zazářej se speciálními věci!</a>
+            <img class="bonfire" src="sword_7509927.png"/>
+            <a class="main2_feature_text"><span class="zahraj">Zazářej se speciálními věci!</span></a>
           </div>
         </div>
       </div>
       <div id="discord"></div>
-      <div class="main4">
-        <a class="headline">Připoj se na náš Discord server!</a>
-        <div class="main4_dc_div">
 
+      <div class="main4">
+        <a class="headline">Připoj se na náš Discord server!<br><!--<span class="aaa">aaa</span>--></a>
+        <img src="character.png" class="panacicek">
+        <div class="main4_dc_div">
+          
           <div class="main4_dc_description_div">
             <a class="main4_dc_description_title">Přijď si pokecat!</a>
             <a class="main4_dc_description"> ・Najdi ostatní hráče <br> ・Vytvářej tickety <br> ・Dostávej oznámení <br> ・Dávej nápady  <br><br> a více! </a>
             <a href="https://discord.gg/2m8DAJ3ZGW" class="main4_dc_button_a">
-              <div class="main4_dc_button">Připojit se!</div>
+             <!-- <div class="main4_dc_button"--> <div class="desktop_navbar_link2_div">Připojit se!</span></div>
             </a>
           </div>
         </div>
       </div>
+      
       <div id="about"></div>
+      <!--
       <div class="main5">
         <a class="headline">Kdo jsme</a>
         <div class="main5_admin_div">
@@ -146,6 +176,7 @@
             </div>
           </div>
         </div>
+        
         <div class="main5_supporter_div">
           <div class="main5_supporters_div">
             <img class="main5_supporters_img" alt="supporters member img" src="adamcek16_a.png">
@@ -171,6 +202,7 @@
           </div>
         </div>
       </div>
+    -->
       <div id="join"></div>
       <div class="main3">
         <a class="headline">Jak se připojit?</a>
@@ -190,6 +222,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="main6">
+      <a class="admin" href="https://draukoo.eu/admin.html">ADMIN panel</a>
     </div>
     <footer class="copyright_div">
       <a href="https://www.youtube.com/@DraukooYT" class="copyright">Vytvořil Draukoo | 2025</a>
