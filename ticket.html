@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickety</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        @font-face {
+            font-family: 'MinecraftTen'; /* Pojmenování fontu */
+            src: url('MinecraftTen-VGORe.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(dveredonebe.png);
+            background-color: #f4f4f9;
+            position: relative;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            padding-right: 0.8%;
+            background-color: #ffffff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+        .auth-container, .ticket-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        input, select, button, textarea {
+            width: 100%;
+            margin: 10px 0;
+            resize: none;
+            padding: 14px;
+            border: 1px solid #ffc7c7;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ff7474;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 18px;
+            padding: 20px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #ff4141;
+        }
+        .ticket {
+            border: 1px solid #ffc5c5;
+            border-radius: 5px;
+
+            margin-right: 10%;
+            margin-bottom: 10px;
+            width: 100%;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        .message {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+        .message .message-text {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .message .message-details {
+            font-size: 12px;
+            color: #000000;
+        }
+        .hidden {
+            display: none;
+        }
+        .logout-button {
+            position: absolute;
+            font-family: 'MinecraftTen', sans-serif;
+            padding-bottom: 20px;
+            line-height: 20px;
+            height: 60px;
+            width: 210px;
+            top: 20px;
+            right: 20px;
+            background-color: #ff7474;
+            color: white;
+            font-size: 28px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .logout-button:hover {
+            background-color: #ff4141;
+            transform: scale(1.05);
+        }
+        .header-img {
+            max-width: 90%;
+            height: auto;
+            margin-bottom: 5%;
+            transition: all 0.5s;
+        }
+        .header-img:hover{
+            transform: scale(1.05);
+        }
+        .ticket-title{
+            max-width: 94%;
+        }
+        .zobrazit{
+            max-width: 80%;
+            max-height: auto;
+            margin-bottom: 5%;
+            font-family: 'MinecraftTen', sans-serif;
+            font-size: 150%;
+        }
+        .inpute{
+            max-width: 94%;
+        }
+        .fontmc{
+            font-family: 'MinecraftTen', sans-serif;
+            font-size: 150%;
+        }
+        .fontmcsize{
+            font-family: 'MinecraftTen', sans-serif;
+            font-size: 250%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="auth-container" id="auth">
+            <img src="draukoo.png" alt="mainimg" class="header-img">
+            <h2 class="fontmc">Prihlaseni / Registrace</h2>
+            <input type="email" id="email" class="inpute" placeholder="e. c. priklad@priklad.com">
+            <input type="password" id="password" class="inpute" placeholder="e. c. silneheslo123">
+            <button onclick="register()" class="fontmc" >Registrovat</button>
+            <button onclick="login()" class="fontmc" >Prihlasit se</button>
+        </div>
+
+        <div class="ticket-container hidden" id="ticket-system">
+            <img src="draukoo.png" alt="mainimg" class="header-img">
+            <h2 class="fontmcsize">Vytvorit novy ticket</h2>
+            <select id="ticket-type">
+                <optgroup label="Nahlášení">
+                    <option value="Nahlášení hráče">Nahlášení hráče</option>
+                </optgroup>
+                <optgroup label="Uživatel">
+                    <option value="Žádost o unban nebo unmute">Žádost o unban nebo unmute</option>
+                    <option value="Zapomenuté heslo">Zapomenuté heslo</option>
+                    <option value="Problémy s připojením">Problémy s připojením</option>
+                    <option value="Změna jména">Změna jména</option>
+                </optgroup>
+                <optgroup label="Spolupráce">
+                    <option value="Nabídka na spolupráci">Nabídka na spolupráci</option>
+                </optgroup>
+                <optgroup label="Jiné">
+                    <option value="Nahlášení chyby">Nahlášení chyby</option>
+                    <option value="Návrh na novinku">Návrh na novinku</option>
+                    <option value="Jiné">Jiné</option>
+                </optgroup>
+            </select>
+            <input type="text" id="ticket-title" class="ticket-title" placeholder="Název ticketu">
+            <textarea id="ticket-message" class="ticket-title" placeholder="Popis problému"></textarea>
+            <button onclick="createTicket()"class="fontmc">Vytvorit ticket</button>
+
+            <h2>Moje tickety</h2>
+            <div id="ticket-list"></div>
+        </div>
+
+        <div id="ticket-detail" class="hidden">
+            <h2 id="ticket-detail-title"></h2>
+            <div id="messages"></div>
+            <textarea id="message-text" class="ticket-title" placeholder="Napište zprávu"></textarea>
+            <button onclick="sendMessage(ticketId)" class="fontmc" >Odeslat zprávu</button>
+        </div>
+    </div>
+
+    <button class="logout-button" onclick="logout()">Odhlasit se</button>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBhyokLKtN8keUkh9xgb-avzXZoNJajxj8",
+            authDomain: "ticket-e180b.firebaseapp.com",
+            databaseURL: "https://ticket-e180b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "ticket-e180b",
+            storageBucket: "ticket-e180b.firebasestorage.app",
+            messagingSenderId: "219394359744",
+            appId: "1:219394359744:web:a963b52bfa64927ef28825",
+            measurementId: "G-07E2VTQ8SB"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+        let ticketId = null;
+
+        function register() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    alert("Účet byl vytvořen.");
+                })
+                .catch(error => {
+                    alert("Chyba: " + error.message);
+                });
+        }
+
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    document.getElementById("auth").classList.add("hidden");
+                    document.getElementById("ticket-system").classList.remove("hidden");
+                    loadTickets();
+                })
+                .catch(error => {
+                    alert("Chyba: " + error.message);
+                });
+        }
+
+        function createTicket() {
+            const user = auth.currentUser;
+            if (!user) return alert("Musíte být přihlášeni.");
+
+            const type = document.getElementById("ticket-type").value;
+            const title = document.getElementById("ticket-title").value;
+            const message = document.getElementById("ticket-message").value;
+
+            if (!title || !message) {
+                return alert("Vyplňte všechny údaje.");
+            }
+
+            const ticket = {
+                userId: user.uid,
+                type,
+                title,
+                message,
+                timestamp: Date.now(),
+                messages: [
+                    { 
+                        user: user.email,
+                        timestamp: Date.now(),
+                        text: message,
+                        type: "Popis problému" // Speciální typ pro popis problému
+                    }
+                ]  // Přidáme popis problému jako první zprávu
+            };
+
+            db.ref("tickets").push(ticket)
+                .then(() => {
+                    alert("Ticket byl vytvořen.");
+                    loadTickets();
+                })
+                .catch(error => {
+                    alert("Chyba: " + error.message);
+                });
+
+            document.getElementById("ticket-title").value = "";
+            document.getElementById("ticket-message").value = "";
+        }
+
+        function loadTickets() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            db.ref("tickets").orderByChild("userId").equalTo(user.uid).once("value")
+                .then(snapshot => {
+                    const ticketList = document.getElementById("ticket-list");
+                    ticketList.innerHTML = "";
+
+                    snapshot.forEach(childSnapshot => {
+                        const ticket = childSnapshot.val();
+                        const ticketDiv = document.createElement("div");
+                        ticketDiv.classList.add("ticket");
+                        ticketDiv.innerHTML = `
+                            <h3 onclick="viewTicket('${childSnapshot.key}')">${ticket.title}</h3>
+                            <p><strong>Typ:</strong> ${ticket.type}</p>
+                            <p><em>${new Date(ticket.timestamp).toLocaleString()}</em></p>
+                            <button onclick="toggleMessages('${childSnapshot.key}')" class="zobrazit">Zobrazit</button>
+                            <div id="messages-${childSnapshot.key}" class="hidden"></div>
+                        `;
+                        ticketList.appendChild(ticketDiv);
+                    });
+                });
+        }
+
+        function toggleMessages(ticketIdParam) {
+            const messagesDiv = document.getElementById("messages-" + ticketIdParam);
+            if (messagesDiv.classList.contains("hidden")) {
+                messagesDiv.classList.remove("hidden");
+                loadMessages(ticketIdParam, messagesDiv);
+            } else {
+                messagesDiv.classList.add("hidden");
+            }
+        }
+
+        function loadMessages(ticketIdParam, messagesDiv) {
+            db.ref("tickets/" + ticketIdParam).once("value")
+                .then(snapshot => {
+                    const ticket = snapshot.val();
+                    const messages = Array.isArray(ticket.messages) ? ticket.messages : [];
+
+                    messagesDiv.innerHTML = "";  // Clear previous messages
+                    messages.forEach(msg => {
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("message");
+                        msgDiv.innerHTML = `
+                            <div class="message-details">
+                                <strong>Uživatel:</strong> ${msg.user}<br>
+                                <strong>Datum:</strong> ${new Date(msg.timestamp).toLocaleString()}
+                            </div>
+                            <div class="message-text">${msg.text}</div>
+                        `;
+                        messagesDiv.appendChild(msgDiv);
+                    });
+
+                    // Přidání textarea pro odesílání nové zprávy
+                    const textareaDiv = document.createElement("div");
+                    textareaDiv.innerHTML = `
+                        <textarea id="message-text-${ticketIdParam}" class="ticket-title" placeholder="Napište zprávu"></textarea>
+                        <button onclick="sendMessage('${ticketIdParam}')">Odeslat zprávu</button>
+                    `;
+                    messagesDiv.appendChild(textareaDiv);
+                });
+        }
+
+        function viewTicket(ticketIdParam) {
+            ticketId = ticketIdParam;
+            db.ref("tickets/" + ticketId).once("value")
+                .then(snapshot => {
+                    const ticket = snapshot.val();
+                    document.getElementById("ticket-system").classList.add("hidden");
+                    document.getElementById("ticket-detail").classList.remove("hidden");
+
+                    document.getElementById("ticket-detail-title").innerText = ticket.title;
+                    document.getElementById("messages").innerHTML = "";
+
+                    const messages = Array.isArray(ticket.messages) ? ticket.messages : [];
+
+                    messages.forEach(msg => {
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("message");
+                        msgDiv.innerHTML = `
+                            <div class="message-details">
+                                <strong>Uživatel:</strong> ${msg.user}<br>
+                                <strong>Datum:</strong> ${new Date(msg.timestamp).toLocaleString()}
+                            </div>
+                            <div class="message-text">${msg.text}</div>
+                        `;
+                        document.getElementById("messages").appendChild(msgDiv);
+                    });
+                })
+                .catch(error => {
+                    alert("Chyba při načítání ticketu: " + error.message);
+                });
+        }
+
+        function sendMessage(ticketIdParam) {
+            const messageText = document.getElementById("message-text-" + ticketIdParam).value;
+            const user = auth.currentUser;
+            
+            if (!messageText) {
+                return alert("Zpráva nemůže být prázdná.");
+            }
+
+            if (!user) {
+                return alert("Musíte být přihlášeni.");
+            }
+
+            const newMessage = {
+                user: user.email,
+                timestamp: Date.now(),
+                text: messageText
+            };
+
+            db.ref("tickets/" + ticketIdParam).once("value")
+                .then(snapshot => {
+                    const ticket = snapshot.val();
+                    const existingMessages = Array.isArray(ticket.messages) ? ticket.messages : [];
+                    existingMessages.push(newMessage);
+
+                    db.ref("tickets/" + ticketIdParam).update({
+                        messages: existingMessages
+                    })
+                    .then(() => {
+                        alert("Zpráva byla odeslána.");
+                        loadMessages(ticketIdParam, document.getElementById("messages-" + ticketIdParam));
+                    })
+                    .catch(error => {
+                        alert("Chyba při odesílání zprávy: " + error.message);
+                    });
+                })
+                .catch(error => {
+                    alert("Chyba při načítání ticketu: " + error.message);
+                });
+
+            document.getElementById("message-text-" + ticketIdParam).value = "";
+        }
+
+        function logout() {
+            auth.signOut()
+                .then(() => {
+                    document.getElementById("ticket-system").classList.add("hidden");
+                    document.getElementById("auth").classList.remove("hidden");
+                })
+                .catch(error => {
+                    alert("Chyba: " + error.message);
+                });
+        }
+
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById("auth").classList.add("hidden");
+                document.getElementById("ticket-system").classList.remove("hidden");
+                loadTickets();
+            } else {
+                document.getElementById("auth").classList.remove("hidden");
+                document.getElementById("ticket-system").classList.add("hidden");
+            }
+        });
+    </script>
+</body>
+</html>

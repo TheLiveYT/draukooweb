@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Ticket Systém</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            position: relative;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        input, select, button, textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .ticket {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            background-color: #ffffff;
+            text-align: center;
+        }
+        .message {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+        .message .message-text {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .message .message-details {
+            font-size: 12px;
+            color: #888;
+        }
+        .hidden {
+            display: none;
+        }
+        .logout-button {
+            position: absolute;
+            width: 10%;
+            top: 20px;
+            right: 20px;
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="auth">
+            <h2>Admin Přihlášení</h2>
+            <select id="username">
+                <option value="Draukoo">Draukoo</option>
+                <option value="bob803">bob803</option>
+                <option value="TylerTattoo">TylerTattoo</option>
+                <option value="snowv">snowv</option>
+                <option value="adamcek16">adamcek16</option>
+                <option value="resii">resii</option>
+            </select>
+            <input type="password" id="password" placeholder="Heslo">
+            <button onclick="adminLogin()">Přihlásit se</button>
+        </div>
+
+        <div id="ticket-system" class="hidden">
+            <h2>Všechny tickety</h2>
+            <div id="ticket-list"></div>
+        </div>
+    </div>
+
+    <!-- Tlačítko pro odhlášení v pravém horním rohu obrazovky -->
+    <button class="logout-button" onclick="logout()">Odhlásit se</button>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBhyokLKtN8keUkh9xgb-avzXZoNJajxj8",
+            authDomain: "ticket-e180b.firebaseapp.com",
+            databaseURL: "https://ticket-e180b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "ticket-e180b",
+            storageBucket: "ticket-e180b.firebasestorage.app",
+            messagingSenderId: "219394359744",
+            appId: "1:219394359744:web:a963b52bfa64927ef28825",
+            measurementId: "G-07E2VTQ8SB"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        const adminCredentials = {
+            "Draukoo": "kkt123",
+            "bob803": "admin456",
+            "TylerTattoo": "admin789",
+            "snowv": "admin321",
+            "adamcek16": "Newyear",
+            "resii": "theresinka"
+        };
+
+        const adminUsers = ["Draukoo", "bob803", "TylerTattoo", "snowv", "adamcek16", "resii"];  // Seznam adminů
+
+        function adminLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (adminCredentials[username] === password) {
+                // Přihlášení úspěšné, skrytí přihlašovacího formuláře
+                document.getElementById("auth").classList.add("hidden");
+                document.getElementById("ticket-system").classList.remove("hidden");
+                loadAllTickets();
+            } else {
+                alert("Neplatné přihlašovací údaje.");
+            }
+        }
+
+        function loadAllTickets() {
+            db.ref("tickets").once("value")
+                .then(snapshot => {
+                    const ticketList = document.getElementById("ticket-list");
+                    ticketList.innerHTML = "";
+
+                    snapshot.forEach(childSnapshot => {
+                        const ticket = childSnapshot.val();
+                        const ticketDiv = document.createElement("div");
+                        ticketDiv.classList.add("ticket");
+                        ticketDiv.innerHTML = `
+                            <h3 onclick="viewTicket('${childSnapshot.key}')">${ticket.title}</h3>
+                            <p><strong>Typ:</strong> ${ticket.type}</p>
+                            <p><em>${new Date(ticket.timestamp).toLocaleString()}</em></p>
+                            <button onclick="toggleMessages('${childSnapshot.key}')">Zobrazit</button>
+                            <div id="messages-${childSnapshot.key}" class="hidden"></div>
+                        `;
+                        ticketList.appendChild(ticketDiv);
+                    });
+                });
+        }
+
+        function toggleMessages(ticketIdParam) {
+            const messagesDiv = document.getElementById("messages-" + ticketIdParam);
+            if (messagesDiv.classList.contains("hidden")) {
+                messagesDiv.classList.remove("hidden");
+                loadMessages(ticketIdParam, messagesDiv);
+            } else {
+                messagesDiv.classList.add("hidden");
+            }
+        }
+
+        function loadMessages(ticketIdParam, messagesDiv) {
+            db.ref("tickets/" + ticketIdParam).once("value")
+                .then(snapshot => {
+                    const ticket = snapshot.val();
+                    const messages = Array.isArray(ticket.messages) ? ticket.messages : [];
+
+                    messagesDiv.innerHTML = "";  // Clear previous messages
+                    messages.forEach(msg => {
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("message");
+                        msgDiv.innerHTML = `
+                            <div class="message-details">
+                                <strong>Uživatel:</strong> ${msg.user}<br>
+                                <strong>Datum:</strong> ${new Date(msg.timestamp).toLocaleString()}
+                            </div>
+                            <div class="message-text">${msg.text}</div>
+                        `;
+                        messagesDiv.appendChild(msgDiv);
+                    });
+
+                    // Přidání textarea pro odesílání nové zprávy
+                    const textareaDiv = document.createElement("div");
+                    textareaDiv.innerHTML = `
+                        <textarea id="message-text-${ticketIdParam}" placeholder="Napište zprávu..."></textarea>
+                        <button onclick="sendMessage('${ticketIdParam}')">Odeslat zprávu</button>
+                    `;
+                    messagesDiv.appendChild(textareaDiv);
+                });
+        }
+
+        function viewTicket(ticketIdParam) {
+            db.ref("tickets/" + ticketIdParam).once("value")
+                .then(snapshot => {
+                    const ticket = snapshot.val();
+                    document.getElementById("ticket-system").classList.add("hidden");
+                    document.getElementById("ticket-detail").classList.remove("hidden");
+
+                    document.getElementById("ticket-detail-title").innerText = ticket.title;
+                    document.getElementById("messages").innerHTML = "";
+
+                    const messages = Array.isArray(ticket.messages) ? ticket.messages : [];
+
+                    messages.forEach(msg => {
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("message");
+                        msgDiv.innerHTML = `
+                            <div class="message-details">
+                                <strong>Uživatel:</strong> ${msg.user}<br>
+                                <strong>Datum:</strong> ${new Date(msg.timestamp).toLocaleString()}
+                            </div>
+                            <div class="message-text">${msg.text}</div>
+                        `;
+                        document.getElementById("messages").appendChild(msgDiv);
+                    });
+                })
+                .catch(error => {
+                    alert("Chyba při načítání ticketu: " + error.message);
+                });
+        }
+
+        function sendMessage(ticketIdParam) {
+            const messageText = document.getElementById("message-text-" + ticketIdParam).value;
+            let adminUser = document.getElementById("username").value;
+
+            if (adminUsers.includes(adminUser)) {
+                adminUser = "[ADMIN] " + adminUser;  // Přidáme prefix ADMIN k uživatelskému jménu administrátora
+            }
+
+            if (!messageText) {
+                return alert("Zpráva nemůže být prázdná.");
+            }
+
+            const newMessage = {
+                user: adminUser,
+                timestamp: Date.now(),
+                text: messageText
+            };
+
+            db.ref("tickets/" + ticketIdParam).once("value")
+                .then(snapshot => {
+                    const ticket = snapshot.val();
+                    const existingMessages = Array.isArray(ticket.messages) ? ticket.messages : [];
+                    existingMessages.push(newMessage);
+
+                    db.ref("tickets/" + ticketIdParam).update({
+                        messages: existingMessages
+                    })
+                    .then(() => {
+                        alert("Zpráva byla odeslána.");
+                        loadMessages(ticketIdParam, document.getElementById("messages-" + ticketIdParam));
+                    })
+                    .catch(error => {
+                        alert("Chyba při odesílání zprávy: " + error.message);
+                    });
+                })
+                .catch(error => {
+                    alert("Chyba při načítání ticketu: " + error.message);
+                });
+
+            document.getElementById("message-text-" + ticketIdParam).value = "";
+        }
+
+        function logout() {
+            document.getElementById("ticket-system").classList.add("hidden");
+            document.getElementById("auth").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
