@@ -90,7 +90,7 @@
             display: none;
         }
         .ban-table p {
-            white-space: nowrap; /* Zabrání textu rozdělit se do nových řádků */
+            white-space: nowrap;
             overflow: visible;
             text-overflow: ellipsis;
         }
@@ -101,7 +101,7 @@
 </head>
 <body>
     <div class="navbar hidden" id="navbar">
-        <a href="index.html" onclick="showSection('tickets')">Draukoo.eu</a>
+        <a href="https://draukoo.eu">Draukoo.eu</a>
         <a href="#" onclick="showSection('absence')">Omluvenky</a>
         <a href="#" onclick="showSection('ban-table')">Banovací tabulka</a>
         <a href="#" onclick="showSection('banlist')">Banovací list</a>
@@ -134,7 +134,6 @@
                 <input type="date" id="to-date" onkeypress="checkEnter(event)">
                 <button onclick="addAbsence()">Přidat omluvenku</button>
                 <div class="absence-list" id="absence-list">
-                    <!-- Omluvenky budou zobrazeny zde -->
                 </div>
             </div>
 
@@ -165,7 +164,6 @@
                 <textarea id="ban-reason" placeholder="Důvod banu" onkeypress="checkEnter(event)"></textarea>
                 <button onclick="addBan()">Přidat ban</button>
                 <div class="ban-list" id="ban-list">
-                    <!-- Zde se budou zobrazovat bannutí uživatelé -->
                 </div>
             </div>
 
@@ -177,47 +175,59 @@
     </div>
 
     <script>
-        // Firebase konfigurace
-        const firebaseConfig = {
-            apiKey: "AIzaSyCA-QJZtC1mLllXBIqZ73frYKzGYMH2uB0",
-            authDomain: "draukooadmin.firebaseapp.com",
-            databaseURL: "https://draukooadmin-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "draukooadmin",
-            storageBucket: "draukooadmin.firebasestorage.app",
-            messagingSenderId: "358092929701",
-            appId: "1:358092929701:web:b4708c744cad54b7fdeb4c",
-            measurementId: "G-B2WXN8N9FS"
-        };
+
+const encodedApiKey = "QUl6YVN5Q0EtUUpadEMxbUxsbFhCSXFaNzNmcllLekdZTUgydUIw";
+const encodedAuthDomain = "ZHJhdWtvb2FkbWluLmZpcmViYXNlYXBwLmNvbQ==";
+const encodedDatabaseURL = "aHR0cHM6Ly9kcmF1a29vYWRtaW4tZGVmYXVsdC1ydGRiLmV1cm9wZS13ZXN0MS5maXJlYmFzZWRhdGFiYXNlLmFwcA==";
+const encodedProjectId = "ZHJhdWtvb2FkbWlu";
+const encodedStorageBucket = "ZHJhdWtvb2FkbWluLmZpcmViYXNlc3RvcmFnZS5hcHA=";
+const encodedMessagingSenderId = "MzU4MDkyOTI5NzAx";
+const encodedAppId = "MTozNTgwOTI5Mjk3MDE6d2ViOmI0NzA4Yzc0NGNhZDU0YjdmZGViNGM=";
+const encodedMeasurementId = "Ry1CMldYTjhOOUZT";
+
+const apiKey = atob(encodedApiKey);
+const authDomain = atob(encodedAuthDomain);
+const databaseURL = atob(encodedDatabaseURL);
+const projectId = atob(encodedProjectId);
+const storageBucket = atob(encodedStorageBucket);
+const messagingSenderId = atob(encodedMessagingSenderId);
+const appId = atob(encodedAppId);
+const measurementId = atob(encodedMeasurementId);
+const firebaseConfig = {
+  apiKey: apiKey,
+  authDomain: authDomain,
+  databaseURL: databaseURL,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+  appId: appId,
+  measurementId: measurementId
+};
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-
-        const hardcodedPassword = {
-            Draukoo: "kkt123",
-            bob803: "tajneheslo",
-            TylerTattoo: "hesloTyler",
-            snowv: "hesloSnowv",
-            adamcek16: "Newyear",
-            resii: "theresinka"
-        };
 
         let isLoggedIn = false;
 
         function login() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
-
-            if (hardcodedPassword[username] === password) {
-                isLoggedIn = true;
-                document.getElementById("login-form").classList.add("hidden");
-                document.getElementById("navbar").classList.remove("hidden");
-                document.getElementById("admin-panel").classList.remove("hidden");
-                showSection('absence');  // Zobrazí omluvenky po přihlášení
-                loadAbsences();
-                loadBanList();
-            } else {
-                alert("Špatné heslo!");
-            }
+            const userRef = database.ref(`users/${username}`);
+            userRef.once('value', snapshot => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.password === password) {
+                        document.getElementById("login-form").classList.add("hidden");
+                        document.getElementById("navbar").classList.remove("hidden");
+                        document.getElementById("admin-panel").classList.remove("hidden");
+                        showSection('absence');
+                    } else {
+                        alert("Špatné heslo!");
+                    }
+                } else {
+                    alert("Uživatel neexistuje!");
+                }
+            });
         }
 
         function showSection(sectionId) {
@@ -253,15 +263,9 @@
                     fromDate: fromDate,
                     toDate: toDate
                 };
-
-                // Přidání omluvenky do Firebase
                 const absencesRef = database.ref('absences');
                 absencesRef.push(newAbsence);
-
-                // Aktualizace zobrazení omluvenek
                 loadAbsences();
-
-                // Vyčištění formuláře
                 document.getElementById("reason").value = "";
                 document.getElementById("from-date").value = "";
                 document.getElementById("to-date").value = "";
@@ -305,15 +309,9 @@
                     toDate: toDate,
                     reason: reason
                 };
-
-                // Přidání banu do Firebase
                 const bansRef = database.ref('bans');
                 bansRef.push(newBan);
-
-                // Aktualizace zobrazení ban listu
                 loadBanList();
-
-                // Vyčištění formuláře
                 document.getElementById("ban-username").value = "";
                 document.getElementById("ban-from-date").value = "";
                 document.getElementById("ban-to-date").value = "";
