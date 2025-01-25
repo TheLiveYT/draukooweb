@@ -292,6 +292,12 @@ body {
     background-position: 50% 50%;
 }
 
+@media (max-width: 2560px){
+    .main1 {
+        width:100%;
+    }
+}
+
 .main1_logo_a {
     margin-bottom: var(--nice-padding);
     cursor: default;
