@@ -877,7 +877,12 @@ ul{
     
   }
   
-
+@media (min-width:2560px){
+    .icon img {
+        margin-left: 2075%;
+        
+      }
+}
 
 
 /* Copyright Text */
