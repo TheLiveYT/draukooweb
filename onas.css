@@ -540,12 +540,48 @@ body{
     scroll-behavior: smooth;
 }
 
-.hlava{
+.hlava {
+    all: unset;
     width: 230px;
     height: 230px;
     position: relative;
-    float:inline-end;
     padding: 6% 20%;
+    float: inline-end;
+}
+
+@media (min-width:2560px){
+    p{
+        width: 45%;
+        font-size: 20px;
+      }
+
+    .container{
+        height: 600px;
+      }
+
+      .headline1{
+        font-size: 100px;
+    }
+    
+    .headline2{
+        font-size: 100px;
+    }
+
+    .parallax {
+        min-height: 900px;
+      } 
+    
+      .parallax1 {
+        min-height: 800px;
+      } 
+    
+      .parallax2 {
+        min-height:800px;
+      } 
+
+      .main3_join_div_div {
+        margin-left: 8%;
+    }
 }
 
 .mec{
