@@ -380,7 +380,11 @@ body {
 
 
 
-
+.nadpis{
+    margin-top: 150px;
+    margin-bottom: 25px;
+    width: 60%
+}
 
 .headline{
     margin-top: 100px;
@@ -544,4 +548,133 @@ body {
     margin-bottom: auto;
 }
 
+.main3_join_div {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    height: 8rem;
+    background-color: var(--background2);
+    border-radius: var(--roundness);
+    margin: 1rem;
+    padding: 1rem;
+    margin-left: 38%;
+}
 
+.main3_join_title {
+    text-align: center;
+    font-size:1.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    transition: all .5s;
+    margin-bottom: .5rem;
+}
+
+.main3_join_content_div {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--background1);
+    height: 100%;
+    border-radius: var(--roundness);
+    align-items: center;
+    justify-content: center;
+}
+
+.main3_join_categories {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    font-size:1.4rem;
+    line-height: 1.5;
+    border-right: 3px solid var(--background2);
+    padding-right: .75rem;
+}
+.main3_join_values {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size:1.4rem;
+    line-height: 1.5;
+    border-left: 3px solid var(--background2);
+    padding-left: .75rem;
+}
+
+.main3 {
+    background-color: var(--background1);
+    min-height: 10rem;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    flex-direction:column;
+    
+}
+
+.main3_join_values {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size:1.4rem;
+    line-height: 1.5;
+    border-left: 3px solid var(--background2);
+    padding-left: .75rem;
+}
+
+
+
+.copyright {
+    color: #ffffff99;
+    text-decoration: none;
+}
+
+.copyright_div {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+    width:auto;
+    background-color: #000;
+}
+
+.main10{
+    width: 40%;
+    height: 100px;
+    color:#5e1d0c;
+    font-family: mine;
+    text-align: center;
+    border: 4px #5e1d0c;
+    border-style: solid;
+    padding-top: 50px;
+    margin: 20px;
+    margin-left: 28%;
+    text-decoration: none;
+    
+}
+
+.admin{
+    font-size: 40px;
+    color:#5e1d0c
+}
+
+.admin:hover{
+    padding-top: 70px;
+    color:#f2b035
+}
+
+.admin:link {
+    text-decoration: none;
+    color:#5e1d0c
+
+}
+
+.admin:visited {
+    text-decoration: none;
+    color:#5e1d0c
+}
+
+.admin:hover {
+    text-decoration: none;
+}
+
+.admin:active {
+    text-decoration: none;
+    color:#5e1d0c
+}
