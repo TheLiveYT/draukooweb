@@ -6,6 +6,7 @@
     <title>Admin Panel</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -111,17 +112,11 @@
     <div class="container">
         <div id="login-form">
             <h2>Přihlášení</h2>
-            <select id="username">
-                <option value="Draukoo">Draukoo</option>
-                <option value="bob803">bob803</option>
-                <option value="TylerTattoo">TylerTattoo</option>
-                <option value="snowv">snowv</option>
-                <option value="adamcek16">adamcek16</option>
-                <option value="resii">resii</option>
-            </select>
+            <input type="email" id="username" placeholder="Email" onkeypress="checkEnter(event)">
             <input type="password" id="password" placeholder="Heslo" onkeypress="checkEnter(event)">
             <button onclick="login()">Přihlásit se</button>
         </div>
+        
 
         <div id="admin-panel" class="hidden">
             <div id="absence" class="section">
@@ -176,7 +171,7 @@
 
     <script>
 
-const encodedApiKey = "QUl6YVN5QmxRMFlwaDFsbWFHT0duZDdYbjFUTGRnYW9mS1czVnVJ";
+const encodedApiKey = "QUl6YVN5RHNIZW85cnd3ZjQwYzNmNU9xR0FPdGR4VjBQU29uNmg0";
 const encodedAuthDomain = "ZHJhdWtvb2FkbWlucGFuZWwuZmlyZWJhc2VhcHAuY29t";
 const encodedDatabaseURL = "aHR0cHM6Ly9kcmF1a29vYWRtaW5wYW5lbC1kZWZhdWx0LXJ0ZGIuZXVyb3BlLXdlc3QxLmZpcmViYXNlZGF0YWJhc2UuYXBw";
 const encodedProjectId = "ZHJhdWtvb2FkbWlucGFuZWw=";
@@ -185,7 +180,7 @@ const encodedMessagingSenderId = "NTcxNDE1Mjc3Njk=";
 const encodedAppId = "MTo1NzE0MTUyNzc2OTp3ZWI6ZjFhNDlhNjljNWU5MTZlNjE4ZWFjOA==";
 const encodedMeasurementId = "Ry03V0dDU1c2NURR";
 
-const apiKey = atob(encodedApiKey);
+const apiKey = "AIzaSyBlQ0Yph1lmaGOGnd7Xn1TLdgaofKW3VuI";
 const authDomain = atob(encodedAuthDomain);
 const databaseURL = atob(encodedDatabaseURL);
 const projectId = atob(encodedProjectId);
@@ -210,25 +205,26 @@ const firebaseConfig = {
         let isLoggedIn = false;
 
         function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            const userRef = database.ref(`users/${username}`);
-            userRef.once('value', snapshot => {
-                if (snapshot.exists()) {
-                    const userData = snapshot.val();
-                    if (userData.password === password) {
-                        document.getElementById("login-form").classList.add("hidden");
-                        document.getElementById("navbar").classList.remove("hidden");
-                        document.getElementById("admin-panel").classList.remove("hidden");
-                        showSection('absence');
-                    } else {
-                        alert("Špatné heslo!");
-                    }
-                } else {
-                    alert("Uživatel neexistuje!");
-                }
-            });
-        }
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Přihlášení proběhlo úspěšně
+            document.getElementById("login-form").classList.add("hidden");
+            document.getElementById("navbar").classList.remove("hidden");
+            document.getElementById("admin-panel").classList.remove("hidden");
+            showSection('absence');
+            loadAbsences();
+            loadBanList();
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert("Chyba při přihlášení: " + errorMessage);
+        });
+}
+
 
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.section');
@@ -275,26 +271,29 @@ const firebaseConfig = {
         }
 
         function loadAbsences() {
-            const absencesRef = database.ref('absences');
-            absencesRef.once('value', snapshot => {
-                const absenceList = snapshot.val();
-                const absenceListDiv = document.getElementById("absence-list");
-                absenceListDiv.innerHTML = '';
+    const absencesRef = database.ref('absences');
+    absencesRef.once('value', snapshot => {
+        const absenceList = snapshot.val();
+        const absenceListDiv = document.getElementById("absence-list");
+        absenceListDiv.innerHTML = '';
 
-                for (let id in absenceList) {
-                    const absence = absenceList[id];
-                    const absenceElement = document.createElement('div');
-                    absenceElement.classList.add('absence-item');
-                    absenceElement.innerHTML = `
-                        <strong>${absence.username}</strong><br>
-                        Důvod: ${absence.reason}<br>
-                        Od: ${formatDate(absence.fromDate)}<br>
-                        Do: ${formatDate(absence.toDate)}
-                    `;
-                    absenceListDiv.appendChild(absenceElement);
-                }
-            });
+        for (let id in absenceList) {
+            const absence = absenceList[id];
+            // Odstranění části emailu po @
+            const displayName = absence.username.replace('@zhjhdwtvb2fkbwlucgfuzwwk.lol', '');
+            const absenceElement = document.createElement('div');
+            absenceElement.classList.add('absence-item');
+            absenceElement.innerHTML = `
+                <strong>${displayName}</strong><br>
+                Důvod: ${absence.reason}<br>
+                Od: ${formatDate(absence.fromDate)}<br>
+                Do: ${formatDate(absence.toDate)}
+            `;
+            absenceListDiv.appendChild(absenceElement);
         }
+    });
+}
+
 
         function addBan() {
             const username = document.getElementById("ban-username").value;
@@ -355,6 +354,7 @@ const firebaseConfig = {
                 }
             }
         }
+        
     </script>
 </body>
 </html>
