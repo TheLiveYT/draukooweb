@@ -203,16 +203,16 @@
     <button class="logout-button" onclick="logout()">Odhlasit se</button>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBhyokLKtN8keUkh9xgb-avzXZoNJajxj8",
-            authDomain: "ticket-e180b.firebaseapp.com",
-            databaseURL: "https://ticket-e180b-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "ticket-e180b",
-            storageBucket: "ticket-e180b.firebasestorage.app",
-            messagingSenderId: "219394359744",
-            appId: "1:219394359744:web:a963b52bfa64927ef28825",
-            measurementId: "G-07E2VTQ8SB"
-        };
+  const firebaseConfig = {
+    apiKey: "AIzaSyBpTtC4QsfYAyxg7ONZ7-JYXaMjJwYVNVc",
+    authDomain: "draukootickets.firebaseapp.com",
+    databaseURL: "https://draukootickets-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "draukootickets",
+    storageBucket: "draukootickets.firebasestorage.app",
+    messagingSenderId: "709788565621",
+    appId: "1:709788565621:web:c1b8024be7713ad241b83c",
+    measurementId: "G-RNZQ5KGELK"
+  };
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -220,30 +220,52 @@
         let ticketId = null;
 
         function register() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    alert("Účet byl vytvořen.");
-                })
-                .catch(error => {
-                    alert("Chyba: " + error.message);
-                });
-        }
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-        function login() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            auth.signInWithEmailAndPassword(email, password)
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            const user = userCredential.user;
+
+            // Pošle ověřovací e-mail
+            user.sendEmailVerification()
                 .then(() => {
-                    document.getElementById("auth").classList.add("hidden");
-                    document.getElementById("ticket-system").classList.remove("hidden");
-                    loadTickets();
+                    window.location.href = "verify-email.html"; // Přesměruje uživatele
                 })
                 .catch(error => {
-                    alert("Chyba: " + error.message);
+                    alert("Chyba při odesílání ověřovacího e-mailu: " + error.message);
                 });
-        }
+        })
+        .catch(error => {
+            alert("Chyba: " + error.message);
+        });
+}
+
+function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            const user = auth.currentUser;
+
+            // Kontrola, zda je e-mail ověřen
+            if (user.emailVerified) {
+                document.getElementById("auth").classList.add("hidden");
+                document.getElementById("ticket-system").classList.remove("hidden");
+                loadTickets();
+            } else {
+                alert("Váš e-mail není ověřen. Zkontrolujte svoji e-mailovou schránku a ověřte svůj účet.");
+                auth.signOut(); // Odhlásí uživatele
+            }
+        })
+        .catch(error => {
+            alert("Chyba: " + error.message);
+        });
+}
+
+
+
 
         function createTicket() {
             const user = auth.currentUser;
@@ -445,6 +467,20 @@
                 document.getElementById("ticket-system").classList.add("hidden");
             }
         });
+        window.onload = function() {
+    // Odhlásit uživatele při načtení stránky
+    auth.signOut()
+        .then(() => {
+            console.log("Uživatel byl odhlášen.");
+            // Zobrazí přihlašovací formulář a skryje ticket systém
+            document.getElementById("auth").classList.remove("hidden");
+            document.getElementById("ticket-system").classList.add("hidden");
+        })
+        .catch(error => {
+            console.log("Chyba při odhlášení: " + error.message);
+        });
+};
+
     </script>
 </body>
 </html>
