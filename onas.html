@@ -10,56 +10,58 @@
 </head>
 
 <header>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <nav class="desktop_navbar">
-        <a href="index.html"><img class="desktop_navbar_logo_img" src="logo_small.png" alt="logo"></a>
-        <a href="index.html" class="desktop_navbar_link scroll">DOMU</a>
-        <a href="onas.html" class="desktop_navbar_link scroll">O nas</a>
-        <a href="nastym.html" class="desktop_navbar_link">Komunita</a>
-        <a href="ticket.html" class="desktop_navbar_link">Tickety</a>
-      <div class="desktop_navbar_link2_div">
-          <a href="#join" class="desktop_navbar_link2 scroll">Připoj se!</a>
-      </div>
-    </nav>
-    <script>
-      const navbar = document.querySelector('.desktop_navbar');
-  
-      window.addEventListener('scroll', () => {
-          if (window.scrollY > 50) {
-              // Při scrollování přidáme třídu pro černé pozadí a odstraníme gradient
-              navbar.classList.add('scrolled');
-              navbar.classList.remove('transparent');
-          } else {
-              // Když je stránka nahoře, přidáme gradient a odstraníme černé pozadí
-              navbar.classList.add('transparent');
-              navbar.classList.remove('scrolled');
-          }
-      });
-  </script>
-
-    <div class="mobile_navbar">
-      <a href="#" class="mobile_navbar_logo_img_a"><img class="mobile_navbar_logo_img" src="logo_small.png" alt="logo"></a>
-      <div id="mobile_navbar_links">
-          <a class="mobile_navbar_link" onclick="mobile_navbar_link_hider()" href="https://github.com/ValMobile/RealisticSurvival/wiki/Getting-Started">Wiki</a>
-          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#discord">Komunita</a>
-          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#about">Kdo jsme</a>
-          <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="#join">Připoj se!</a>
-        </div>
-
-        <div class="icon" onclick="mobile_navbar_link_hider()">
-            <i class="fa fa-bars"></i>
-        </div>
-        <script>
-            function mobile_navbar_link_hider() {
-            var x = document.getElementById("mobile_navbar_links");
-            if (x.style.display === "flex") {
-                x.style.display = "none";
-            } else {
-                x.style.display = "flex";
-            }
-            } 
-        </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <nav class="desktop_navbar">
+      <a href="#"><img class="desktop_navbar_logo_img" src="logo_small.png" alt="logo"></a>
+      <a href="./" class="desktop_navbar_link scroll">DOMU</a>
+      <a class="desktop_navbar_link" href="./onas">O nas</a>
+      <a href="./nastym" class="desktop_navbar_link ">Komunita</a>
+      <a href="./ticket" class="desktop_navbar_link">Tickety</a>
+    <div class="desktop_navbar_link2_div">
+        <a href="#join" class="desktop_navbar_link2 scroll">Připoj se!</a>
     </div>
+  </nav>
+  <script>
+    const navbar = document.querySelector('.desktop_navbar');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            // Při scrollování přidáme třídu pro černé pozadí a odstraníme gradient
+            navbar.classList.add('scrolled');
+            navbar.classList.remove('transparent');
+        } else {
+            // Když je stránka nahoře, přidáme gradient a odstraníme černé pozadí
+            navbar.classList.add('transparent');
+            navbar.classList.remove('scrolled');
+        }
+    });
+</script>
+
+  <div class="mobile_navbar">
+    <a href="#" class="mobile_navbar_logo_img_a"><img class="mobile_navbar_logo_img" src="logo_small.png" alt="logo"></a>
+    <div id="mobile_navbar_links">
+        <a class="mobile_navbar_link" onclick="mobile_navbar_link_hider()" href="./">./DOMU</a>
+        <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="./onas">O nas</a>
+        <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="./nastym">Komunita</a>
+        <a class="mobile_navbar_link scroll" onclick="mobile_navbar_link_hider()" href="./ticket">Tickety</a>
+      </div>
+
+      <div class="icon" onclick="mobile_navbar_link_hider()">
+          <i class="fa fa-bars"></i>
+      </div>
+      <script>
+          function mobile_navbar_link_hider() {
+        var x = document.getElementById("mobile_navbar_links");
+        if (x.style.display === "flex") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "flex";
+        }
+    }
+      </script>
+  </div>
+
+    
 </header>
 <body>
     <div class="parallax">
