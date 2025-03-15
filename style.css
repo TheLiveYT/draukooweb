@@ -667,76 +667,8 @@ ul{
     width:auto;
     background-color: #000;
 }
-
-@media only screen and (max-width: 600px) {
-    .desktop_navbar{
-        display:none;
-    }
-    .mobile_navbar{
-        display:flex;
-    }
-    .headline {
-        font-size:1.9rem;
-        margin-right: 1rem;
-        margin-left: 1rem;
-    }
-    .main1_logo {
-        max-width: 16rem;
-    }
-    .main1_description {
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-    }
-    .main1_ipcopier {
-        display: none;
-    }
-    .main5_admins_img {
-        align-self: center;
-        padding-top: 1rem;
-    }
-    .main5_admins_div{
-        flex-direction: column;
-        min-height: 0;
-    }
-    .main5_admins_description_div {
-        max-width: 100%;
-        padding: 2rem;
-    }
-    .main4_dc_div {
-        flex-direction: column;
-    }
-    .main4_dc_widget {
-        height: 20rem;
-        width: 100%;
-    }
-    .main3_join_div {
-        min-width: 20rem;
-        min-height: 9rem;
-    }
-    .main3_join_content_div {
-        padding:1rem;
-    }
-    .main5_admins_dev_type1 {
-        padding-right: 0;
-    }
-    .main5_admins_dev_type2 {
-        padding-left: 0;
-    }
-}
-@media only screen and (max-width: 360px) {
-    .main3_join_categories {
-        font-size:1rem;
-    }
-    .main3_join_values {
-        font-size:1rem;
-    }
-    .main3_join_div {
-        min-width: 10rem;
-        padding: .5rem;
-    }
-    .main3_join_div_div {
-        margin: .25rem;
-    }
+.mobile_navbar{
+    display:none;
 }
 
 
