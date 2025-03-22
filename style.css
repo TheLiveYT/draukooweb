@@ -109,9 +109,9 @@ body {
 
 .desktop_navbar_logo_img {
     width: 4rem;
-    padding-left: 7px;
     padding-top: 20px;
-    padding-right: 40px
+    padding-right: 40px;
+    padding-bottom: 22%;
 }
 
 .desktop_navbar_link {
@@ -138,7 +138,6 @@ body {
     text-shadow: 2px 2px #5e1d0c;
     text-decoration: none;
     text-align: center;
-    background-color:;
     border-radius: 18px;
     font-size: 20px;
     padding: 15px;
@@ -168,32 +167,45 @@ body {
 .desktop_navbar_link2:hover {
     transform: scale(1.2);             /* Zvětšení při najetí */
     opacity: 0.8;                      /* Změna opacity při hoveru */
-    background-color: ;         /* Změna barvy pozadí při hoveru */
 }
 
 .desktop_navbar_link2_div {
     font-size: 1.2rem;
     padding: .8rem;
     background-color: #CD5C5C;
-    font-family: sans-serif;
+    font-family: craft;
     transition: all .5s;
     margin-left: auto;
     color: #f2b035;
-    margin-right: 20px;
+    margin-right: 40px;
+    margin-top: 10px;
     font-weight: 700;
     animation: float-circle 4s linear infinite;
     border: solid 1px var(--accent1);
     border-radius: var(--roundness);
     text-align: center;
-    
+} 
+.desktop_navbar_link2_div2 {
+    font-size: 1.2rem;
+    padding: .8rem;
+    background-color: #CD5C5C;
+    font-family: craft;
+    transition: all .5s;
+    margin-left: auto;
+    color: #f2b035;
+    margin-right: 40px;
+    margin-top: 10px;
+    font-weight: 700;
+    animation: float-circle 4s linear infinite;
+    border: solid 1px var(--accent1);
+    border-radius: var(--roundness);
+    text-align: center;
 } 
 
 
-/*.desktop_navbar_link2_div:hover {
-    /*border: solid 1px var(--accent2);
-    background-color: #5e1d0c;
-    color: #f2b035;
-} */
+.desktop_navbar_link2_div2:hover {
+    color: #5e1d0c;
+}
 
 .desktop_navbar_link2:hover {
     color: #5e1d0c;
@@ -228,22 +240,13 @@ body {
     align-items: center;
     align-content: center;
     justify-content: center;
-    background: rgba(0, 0, 0, .5) url(m.jpg);
-    /*background-blend-mode: darken; */
+    background: rgba(0, 0, 0, .5);
+    background-image: url(m.jpg);
     background-repeat: no-repeat;
-    background-position: 50% 50%;
+    background-position: center center;
+    background-size: cover;
 }
 
-@media (max-width: 2560px) {
-    .main1 {
-        width: 100%;
-        height: 100vh; /* Celá výška okna */
-        background-image: url('m.jpg');
-        background-size: cover; /* Přizpůsobí obrázek tak, aby vyplnil celý prostor */
-        background-repeat: no-repeat; /* Zabraňuje opakování obrázku */
-        background-position: center; /* Centrovat obrázek */
-    }
-}
 
 .main1_logo_a {
     margin-bottom: var(--nice-padding);
@@ -315,8 +318,8 @@ body {
     left: 50%;
     transform: translate(-50%, -0%);
     text-align: center;
-    background-color: rgba(0, 175, 0, 0.1);
-    border:solid rgba(0, 175, 0, 1) 1px;
+    background-color: rgba(175, 0, 0, 0.1);
+    border:solid rgb(132, 17, 17) 1px;
     color: #000;
     border-radius: var(--roundness);
     z-index: 9999;
@@ -334,8 +337,6 @@ body {
     padding-left: 50%;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
-
-/*------------------------------------------------------------------------------------*/
 
 .main1_downarrow:hover {
     opacity: 1; /* Plná neprůhlednost při najetí myší */
@@ -501,6 +502,7 @@ ul{
 .panacicek{
     width: 230px;
     padding-right: 50%;
+    padding-left: 38%;
     padding-top: 30px;
     position: absolute;
 
@@ -623,11 +625,11 @@ ul{
   
   .icon-container {
     display: flex;
-    gap: 30px;
     margin: 0 0 20px 0;
     background-color: #000;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-
   }
   
   .icon img {
@@ -868,7 +870,7 @@ ul{
             background-size: cover; /* Přizpůsobí obrázek tak, aby vyplnil celý prostor */
             background-repeat: no-repeat; /* Zabraňuje opakování obrázku */
             background-position: center; /* Centrovat obrázek */
-        }
+        }
     }
 
     .main1_logo_a {
@@ -1078,16 +1080,9 @@ ul{
     height: 50vw
 }
 
-    .panacicek{
-        width: 130px;
-        padding-left: 0%;
-        padding-top: 30px;
-        position: none;
-    }
     
     .main4_dc_description_div {
         display: flex;
-        flex-direction:;
         text-align: left;
         max-width: 50px;
         margin-right: 200px;
@@ -1109,7 +1104,6 @@ ul{
         margin-bottom:1.5rem;
         font-size:.8rem;
         width: 180px;
-        padding-top: ;
         margin-top: -20px;
     }
 
@@ -1119,11 +1113,8 @@ ul{
         text-align: center;
         margin-top: 0;
         margin-left: 0;
-        margin-right: ;
         margin-bottom: 1.5rem;
-        transition: all .5s;
-        font-size: ;
-        
+        transition: all .5s;      
     }
 
     .desktop_navbar_link2_div{
@@ -1200,15 +1191,6 @@ ul{
         flex-direction:column;
         
     }
-    
-      .icon-container {
-        display: flex;
-        gap: 30px;
-        margin: 0 0 20px 0;
-        background-color: #000;
-        width: 100%;
-    
-      }
       
       .icon img {
         width: 30px;
@@ -1285,4 +1267,10 @@ ul{
     }
    
     
+}
+
+.icon{
+    width: 2.52%;
+    margin-right: 50%;
+    height: auto;
 }
