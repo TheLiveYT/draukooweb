@@ -20,7 +20,7 @@
         <a href="./nastym" class="desktop_navbar_link ">Komunita</a>
         <a href="./ticket" class="desktop_navbar_link">Tickety</a>
       <div class="desktop_navbar_link2_div">
-          <a href="#join" class="desktop_navbar_link2 scroll">Připoj se!</a>
+          <a href="#more" class="desktop_navbar_link2 scroll">Pripoj se!</a>
       </div>
     </nav>
     <script>
@@ -28,11 +28,9 @@
   
       window.addEventListener('scroll', () => {
           if (window.scrollY > 50) {
-              // Při scrollování přidáme třídu pro černé pozadí a odstraníme gradient
               navbar.classList.add('scrolled');
               navbar.classList.remove('transparent');
           } else {
-              // Když je stránka nahoře, přidáme gradient a odstraníme černé pozadí
               navbar.classList.add('transparent');
               navbar.classList.remove('scrolled');
           }
@@ -83,12 +81,12 @@
           <script>
             function copyText() {
                 navigator.clipboard.writeText
-            ("play.example.com");
+            ("mc.draukoo.eu");
                 }
             $(document).ready(function() {
             $('.main1_ipcopier').click(function() {
                 var popup = $('<div>', { class: 'main1_popup' })
-                .append($('<h3 class="copy_confirm">').text('Copied IP to clipboard'))
+                .append($('<h3 class="copy_confirm">').text('IP adresa byla zkopírována do schránky.'))
                 $(this).after(popup);
                 setTimeout(function() {
                 popup.remove();
@@ -113,119 +111,46 @@
           });
         </script>
       </div>
-
-      <div id="more"></div>
       <div class="main2">
-        <a href="#more" class="scroll">
-          <img alt="downarrow" class="main1_downarrow" src="downarrow.png"> <!---->
+        <!-- <a href="#more" class="scroll">
+          <img alt="downarrow" class="main1_downarrow" src="downarrow.png"> -->
         </a>
         <a class="headline">Co nabízíme?</a>
         <div class="main2_features_div">
           <div class="main2_feature">
-            <a class="main2_feature_headline"id="rs">Realistický survival</a>
+            <a class="main2_feature_headline"id="rs">Realisticky survival</a>
             <img class="bonfire"src="bonfire_1293200.png"/>
-            <a class="main2_feature_text"><span class="zahraj">Zahrajte si realistický survival!</span>
+            <a class="main2_feature_text"><span class="zahraj">Zahrajte si realisticky survival!</span>
             </a>
           </div>
           <div class="main2_feature">
             <a class="main2_feature_headline">Bedny</a>
             <img class="bonfire"src="chest_1587732.png"/>
-            <a class="main2_feature_text"><span class="bedny">Otevírej bedny a vyhrávej věci!</span></a>
+            <a class="main2_feature_text"><span class="bedny">Otevirej bedny a vyhrávej veci!</span></a>
           </div>
           <div class="main2_feature">
-            <a class="main2_feature_headline">Non-Vanilla věci</a>
+            <a class="main2_feature_headline">Non-Vanilla veci</a>
             <img class="bonfire" src="sword_7509927.png"/>
-            <a class="main2_feature_text"><span class="zahraj">Zazářej se speciálními věci!</span></a>
+            <a class="main2_feature_text"><span class="zahraj">Zazarej se specialnimi vecmi!</span></a>
           </div>
         </div>
       </div>
-      <div id="discord"></div>
-    <!--<div class="parallax">
-    </div>-->
-     <!-- <div class="main4">
-        <a class="headline">Připoj se na náš Discord server!<br><span class="aaa">aaa</span></a>
-        <div class="main4_dc_div">
-          <div class="main4_dc_description_div">
-            <a class="main4_dc_description_title">Přijď si pokecat!</a>
-            <a class="main4_dc_description"> ・Najdi ostatní hráče <br> ・Vytvářej tickety <br> ・Dostávej oznámení <br> ・Dávej nápady  <br><br> a více! </a>
-            <a href="https://discord.gg/2m8DAJ3ZGW" class="main4_dc_button_a">
-             <div class="main4_dc_button" <div class="desktop_navbar_link2_div">Připojit se!</span></div>
-            </a>
-            <img src="character.png" class="panacicek">
-          </div>
-        </div>
-      </div>-->
       <div class="main4">
-        <a class="headline">Připoj se na náš Discord server!<br><!--<span class="aaa">aaa</span>--></a>
+        <a class="headline">Pripoj se na nas Discord server!<br></a>
         <img src="character.png" class="panacicek">
         <div class="main4_dc_div">
           <div class="main4_dc_description_div">
             <a class="main4_dc_description_title">Přijď si pokecat!</a>
             <a class="main4_dc_description"> ・Najdi ostatní hráče <br> ・Vytvářej tickety <br> ・Dostávej oznámení <br> ・Dávej nápady  <br><br> a více! </a>
             <a href="https://discord.gg/2m8DAJ3ZGW" class="main4_dc_button_a">
-             <!-- <div class="main4_dc_button"--> <div class="desktop_navbar_link2_div">Připojit se!</span></div>
+            <div class="desktop_navbar_link2_div2">Pripoj se!</span></div>
             </a>
           </div>
         </div>
       </div>
     </div>
-      <div class="parallax1">
-      </div>
-      
-      <div id="about"></div>
-      <!--
-      <div class="main5">
-        <a class="headline">Kdo jsme</a>
-        <div class="main5_admin_div">
-          <div class="main5_admins_div main5_admins_dev_type2">
-            <img class="main5_admins_img" alt="admin member img" src="draukoo_a.png">
-            <div class="main5_admins_description_div">
-              <a class="main5_admins_description_rank main5_admins_description_rank_owner">Majitel</a>
-              <a class="main5_admins_description_title" href="https://www.youtube.com/@DraukooYT">Draukoo</a>
-            </div>
-          </div>
-          <div class="main5_admins_div main5_admins_dev_type1">
-            <img class="main5_admins_img" alt="admin member img" src="bob803_a.png">
-            <div class="main5_admins_description_div">
-              <a class="main5_admins_description_rank main5_admins_description_rank_admin">Admin</a>
-              <a class="main5_admins_description_title" href="">bob803</a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="main5_supporter_div">
-          <div class="main5_supporters_div">
-            <img class="main5_supporters_img" alt="supporters member img" src="adamcek16_a.png">
-            <div class="main5_supporters_description_div">
-              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">Hl. Helper</a>
-              <a class="main5_supporters_description_title">adamcek16</a>
-            </div>
-          </div>
-          <div class="main5_supporters_div">
-            <img class="main5_supporters_img" alt="supporters member img" src="snowv_a.png">
-            <div class="main5_supporters_description_div">
-              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">El. Helper</a>
-              <a class="main5_supporters_description_title">snowv</a>
-            </div>
-          </div>
-          <div class="main5_supporters_div">
-            <img class="main5_supporters_img" alt="supporters member img" src="tylertattoo_a.png">
-            <div class="main5_supporters_description_div">
-              <a class="main5_supporters_description_rank main5_supporters_description_rank_supporter">Helper</a>
-              <a class="main5_supporters_description_title">TylerTattoo</a>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-    -->
-
-    
-
-
-      <div id="join"></div>
-      <div class="main3">
-        <a class="headline">Jak se připojit?</a>
+      <div class="main3" id="more">
+        <a class="headline">Jak se pripojit?</a>
         <div class="main3_join_div_div">
           <div class="main3_join_div">
             <a class="main3_join_title">Java</a>
@@ -236,7 +161,7 @@
               </div>
               <div class="main3_join_values">
                 <a>mc.draukoo.eu</a>
-                <a>1.21.1</a>
+                <a>Jakákoliv</a>
               </div>
             </div>
           </div>
@@ -248,12 +173,8 @@
         </a>
       </div>
     </div>
-    
-
-
-   
     <footer class="copyright_div">
-      <a href="https://www.youtube.com/@DraukooYT" class="copyright">Vytvořili Draukoo a Resii | &copy 2025</a>
+      <a href="https://www.youtube.com/@DraukooYT" target="_blank" class="copyright">Vytvořili Draukoo a Resii | &copy 2025</a>
     </footer>
   </body>
 </html>
