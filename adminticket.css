@@ -1,0 +1,121 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f9;
+    position: relative;
+    background-image: url(image.png);
+}
+h2{
+    color: white;
+    font-size: 35px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+input, select, button, textarea {
+    width: 117%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#password{
+    width:110%;
+}
+
+button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    /*border: 1px solid #5e1d0c;*/
+}
+button:hover {
+    background-color: #5e1d0c;
+}
+.ticket {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #ffffff;
+    text-align: center;
+}
+.message {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+.message .message-text {
+    font-weight: bold;
+    margin-top: 5px;
+}
+.message .message-details {
+    font-size: 12px;
+    color: #888;
+}
+.hidden {
+    display: none;
+}
+.logout-button {
+    position: absolute;
+    width: 10%;
+    top: 20px;
+    right: 20px;
+    background-color: #5e1d0c;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.logout-button:hover {
+    background-color: #c82333;
+}
+
+.password-container {
+    position: relative;
+    width: 300px; /* Šířka inputu */
+  }
+  
+  .password-container input {
+    width: 110%;
+    padding: 10px;
+    padding: right -35px; /* Prostor pro ikonu */
+    font-size: 16px;
+  }
+  
+  .toggle-icon {
+    position: absolute;
+    top:52%;
+    left: 315px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+  }
+
+
