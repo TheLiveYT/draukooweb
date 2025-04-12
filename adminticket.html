@@ -3,105 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-3543425475812388">
     <title>Admin Ticket Systém</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            width: 100%;
-            max-width: 500px;
-        }
-        input, select, button, textarea {
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .ticket {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            background-color: #ffffff;
-            text-align: center;
-        }
-        .message {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #f9f9f9;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-        }
-        .message .message-text {
-            font-weight: bold;
-            margin-top: 5px;
-        }
-        .message .message-details {
-            font-size: 12px;
-            color: #888;
-        }
-        .hidden {
-            display: none;
-        }
-        .logout-button {
-            position: absolute;
-            width: 10%;
-            top: 20px;
-            right: 20px;
-            background-color: #dc3545;
-            color: white;
-            padding: 8px 16px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .logout-button:hover {
-            background-color: #c82333;
-        }
-    </style>
+    <link href="adminticket.css" rel="stylesheet"/>
 </head>
 <body>
     <div class="container">
-        <div id="auth">
+        <div class="container">
             <h2>Admin Přihlášení</h2>
-            <input type="email" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Heslo">
-            <button onclick="adminLogin()">Přihlásit se</button>
-        </div>
-
+            <div class="password-container">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="password" placeholder="Heslo" />
+                <button onclick="adminLogin()">Přihlásit se</button>
+                <div class="toggle-icon" onclick="togglePassword()">
+                  <!-- Ikona oka (skrytá při začátku) -->
+                  <svg id="eye" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 16" style="display: none;">
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M11 .5C4 .5.5 8 .5 8S4 15.5 11 15.5 21.5 8 21.5 8 18 .5 11 .5Z" />
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M11 12.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Z" />
+                  </svg>
+            
+                  <!-- Ikona přeškrtnutého oka (skrytá při výchozím stavu) -->
+                  <svg id="eye-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 16">
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M1 1l20 14" />
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M11 .5C4 .5.5 8 .5 8s1.6 3.2 5 5.3" />
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M21.5 8S18 .5 11 .5" />
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M11 15.5c-1.7 0-3.2-.4-4.5-1" />
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M11 12.5a4.5 4.5 0 0 0 4.2-2.8" />
+                    <path stroke="black" stroke-linecap="round" stroke-linejoin="round" d="M6.8 7.1A4.5 4.5 0 0 0 11 12.5" />
+                  </svg>
+                </div>
+              </div>
+            
+              <script>
+                function togglePassword() {
+                  const input = document.getElementById("password");
+                  const eye = document.getElementById("eye");
+                  const eyeOff = document.getElementById("eye-off");
+            
+                  const isHidden = input.type === "password"; // Kontrola, zda je heslo skryté
+                  input.type = isHidden ? "text" : "password"; // Změna typu inputu
+                  eye.style.display = isHidden ? "block" : "none"; // Zobrazí ikonu "oko"
+                  eyeOff.style.display = isHidden ? "none" : "block"; // Zobrazí ikonu "přeškrtnuté oko"
+                }
+              </script>
+              
         <div id="ticket-system" class="hidden">
             <h2>Všechny tickety</h2>
             <div id="ticket-list"></div>
@@ -132,7 +80,7 @@ const email = document.getElementById("email").value;
     console.log(email);
 
     // Zkontrolujeme, zda email končí na požadovanou doménu
-    if (!email.endsWith("@zhjhdwtvb2fkbwlucgfuzwwk.lol")) {
+    if (!email.endsWith("@draukoo.eu")) {
         alert("Access has been denied because user does not exist on backend. Try contacting the site administrators to resolve this issue.");
         return;
     }
@@ -142,8 +90,11 @@ const email = document.getElementById("email").value;
         .then(userCredential => {
             const user = userCredential.user;
             // Pokud uživatel existuje, pokračujeme
-            if (email.endsWith("@zhjhdwtvb2fkbwlucgfuzwwk.lol")) {
-                document.getElementById("auth").classList.add("hidden");
+            if (email.endsWith("@draukoo.eu")) {
+                const authElement = document.getElementById("auth");
+if (authElement) {
+    authElement.classList.add("hidden");
+}
                 document.getElementById("ticket-system").classList.remove("hidden");
                 loadAllTickets();
             } else {
@@ -267,6 +218,6 @@ const email = document.getElementById("email").value;
                 document.getElementById("auth").classList.remove("hidden");
             });
         }
-    </script>
+            </script>
 </body>
 </html>
