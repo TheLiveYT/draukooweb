@@ -70,8 +70,11 @@
           <img class="main1_logo" src="logo.png" alt="logo">
         </a>
         <div class="main1_description">
-          <a class="minecraft">MINECRAFT, jako</a><br>
-          <a class="main1_actcent">nikdy nebyl</a><a>.</a>
+          <div class="main1_description">
+            <div  style="font-size: 30px; font-weight: bold;  font-family: craft;">Zbyva:</div>
+            <div class="countdown main1_actcent" id="countdownTimer" style="font-size: 60px; font-weight: bold;  font-family: mine;"></div>
+          </div>
+          
         </div>
         <div class="main1_ipcopier_div">
           <button class="main1_ipcopier" onclick="copyText()" type="button">
@@ -112,6 +115,30 @@
             });
           });
         </script>
+        <script>
+          function updateCountdown() {
+            const targetDate = new Date("2025-04-30T15:00:00");
+            const now = new Date();
+            const diff = targetDate - now;
+        
+            if (diff <= 0) {
+              document.getElementById("countdownTimer").textContent = "Čas vypršel!";
+              return;
+            }
+        
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+        
+            document.getElementById("countdownTimer").textContent =
+              `${days} dni ${hours} h ${minutes} min ${seconds} s`;
+          }
+        
+          setInterval(updateCountdown, 1000);
+          updateCountdown(); // spustit hned
+        </script>
+        
       </div>
       <div class="main2">
         <!-- <a href="#more" class="scroll">
