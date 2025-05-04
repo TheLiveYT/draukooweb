@@ -71,8 +71,8 @@
         </a>
         <div class="main1_description">
           <div class="main1_description">
-            <div  style="font-size: 30px; font-weight: bold;  font-family: craft;">Zbyva:</div>
-            <div class="countdown main1_actcent" id="countdownTimer" style="font-size: 60px; font-weight: bold;  font-family: mine;"></div>
+            <div  style="font-size: 30px; font-weight: bold;  font-family: craft;">Minecraft jako</div>
+            <div class="countdown main1_actcent" id="countdownTimer" style="font-size: 60px; font-weight: bold;  font-family: mine;">NIKDY NEBYL.</div>
           </div>
           
         </div>
@@ -114,29 +114,6 @@
               });
             });
           });
-        </script>
-        <script>
-          function updateCountdown() {
-            const targetDate = new Date("2025-04-30T15:00:00");
-            const now = new Date();
-            const diff = targetDate - now;
-        
-            if (diff <= 0) {
-              document.getElementById("countdownTimer").textContent = "Čas vypršel!";
-              return;
-            }
-        
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-        
-            document.getElementById("countdownTimer").textContent =
-              `${days} dni ${hours} h ${minutes} min ${seconds} s`;
-          }
-        
-          setInterval(updateCountdown, 1000);
-          updateCountdown(); // spustit hned
         </script>
         
       </div>
